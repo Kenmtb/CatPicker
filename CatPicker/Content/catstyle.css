@@ -1,0 +1,53 @@
+﻿
+div.topNavBar {
+  width: 2000px;
+  height:100px;
+  display: inline;
+  float: left;
+  background-color:lightblue;
+}
+
+div.topCenterNavBar {
+  display:table;
+  width:100%;
+  margin:auto;
+  min-height:90px;
+  padding:15px 80px;
+}
+
+
+
+div.navBarPic {
+  height: 70px;
+  
+  width: 350px;
+  padding: 0px 50px;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: white;
+  overflow: hidden;
+}
+
+a.navBarPic{
+  vertical-align:baseline;
+}
+img.navBarPic {
+  height: 70px;
+ 
+  display: inline-block;
+  vertical-align: middle;
+  width:250px;
+}
+
+div.topNavBarSpacer {
+  height: auto;
+  max-width: 50%;
+  padding: 35px 80px;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: lightyellow;
+}
+
+body{
+  padding-top:10px;
+}
