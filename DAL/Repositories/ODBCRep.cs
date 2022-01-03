@@ -86,7 +86,7 @@ namespace DAL.Repositories
 				reader = getDataReader(conStrName, "");
 				try
 				{
-					while (reader.Read())
+
 						list.Add(PopulateRecord(reader));
 				}
 				finally
