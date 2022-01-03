@@ -1,0 +1,12 @@
+﻿using System;
+
+public class CatVM
+{
+	//edited via github
+	//added from local
+<<<<<<< HEAD
+	//from repo and local
+=======
+	//from repo and repo
+>>>>>>> d68ed2d81e8106baf5c575880249262a78b587c9
+}
