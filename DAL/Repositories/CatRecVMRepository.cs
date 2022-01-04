@@ -17,17 +17,22 @@ namespace DAL.Repositories
 		//private Contexts.CatPersonalityContext catPersonalityContext = null;
 
 		private CatRecVM cvm;
-		private EFRep.CatRepository<Cat> catRep;
+
+		
+
+		private CatRepository<Cat> catRep;
 		private CatDetailsRepository<CatDetail> detailsRep;
 		private CatPersonalityRepository<CatPersonality> personalityRep;
 		private CatBreedRepository<CatBreed> breedRep;
 		
 		public CatRecVMRepository()
 		{
-		
+
 			//Instantiate repositories
+
 			
-			catRep = new EFRep.CatRepository<Cat>();
+
+			catRep = new CatRepository<Cat>();
 			detailsRep = new CatDetailsRepository<CatDetail>();
 			personalityRep = new CatPersonalityRepository<CatPersonality>();
 			breedRep = new CatBreedRepository<CatBreed>();
@@ -51,10 +56,12 @@ namespace DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public CatRecVM GetById(object id)
+		public CatRecVM GetById(int id)
 		{
 			//Get a new cat record object (id=-1) or and existing cat record object
 			cvm.catRec = catRep.GetById(id);
+
+			
 
 			//Get drop list data
 			cvm.catPersonalityList = personalityRep.GetAll().ToList();

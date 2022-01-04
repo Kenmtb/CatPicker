@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic;
 using System.Data.SqlClient;
 using Models.Models;
+using System.Data;
 
 namespace DAL.Repositories
 {
@@ -16,7 +17,7 @@ namespace DAL.Repositories
 
 		public Contexts.CatsContext _context = null;
 		//public DbSet<T> table = null;
-		SqlDataReader dr;
+		//SqlDataReader dr;
 		List<T> table;
 		T catRec;
 		 
@@ -28,9 +29,10 @@ namespace DAL.Repositories
 
 		}
 
-		public CatRepository( Contexts.CatsContext _context)
+		public CatRepository( string sqlStr)
 		{
-			this._context = _context;
+			
+			//this._context = _context;
 			//table = _context.Set<T>();			
 		}
 
@@ -40,32 +42,44 @@ namespace DAL.Repositories
 		}
 
 
-		public override Cat PopulateRecord(SqlDataReader reader)
+		public override Cat PopulateRecord(DataRow dr)
 		{
 			Cat catRec = new Cat();
 			
 			catRec.Id = Convert.ToInt32(dr["Id"]);
-			catRec.breedId = Convert.ToInt32(dr["breedId"]);
-			catRec.catDetailsId = Convert.ToInt32(dr["catDetailsId"]);
-			catRec.locationId = Convert.ToInt32(dr["locationId"]);
 			catRec.name = dr["name"].ToString();
-			catRec.age = Convert.ToInt32(dr["age"]);
-			catRec.gender = dr["gender"].ToString();
-			catRec.age = Convert.ToInt32(dr["age"]);
+			catRec.breedId = (object)dr["breedId"] == DBNull.Value ? null : (int?)dr["breedId"];
+			catRec.locationId = (object)dr["locationId"] == DBNull.Value ? null : (int?)dr["locationId"];
+			catRec.catDetailsId = (object)dr["catDetailsId"] == DBNull.Value ? null : (int?)dr["catDetailsId"];   //!dr.IsDBNull(3) ? (Int32?)dr.GetInt32(3) : null;
+			catRec.catPersonalityId = (object)dr["catPersonalityId"] == DBNull.Value ? null : (int?)dr["catPersonalityId"];
+			catRec.age = (object)dr["age"] == DBNull.Value ? null : (int?)dr["age"];
 			catRec.pic = dr["pic"].ToString();
+			catRec.gender = dr["gender"].ToString();
+			catRec.mainColor = dr["mainColor"].ToString();
+			catRec.secondColor = dr["secondColor"].ToString();
+			catRec.thirdColor = dr["thirdColor"].ToString();
+			catRec.weight = (object)dr["weight"] == DBNull.Value ? null : (double?)dr["weight"];
+			catRec.arrivalDate = (object)dr["arrivalDate"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(dr["arrivalDate"].ToString());
 			return catRec;
 		}
 
 
-		public IEnumerable<T> GetAll()
+		public IEnumerable<Cat> GetAll()
 		{
-	
-			return table.ToList();
+			using (var command = new SqlCommand("SELECT * FROM dbo.cats"))
+			{
+
+				return GetRecords(command);
+			}
+			//return table.ToList();
 		}
 
-		public T GetById(int id)
+		public Cat GetById(int id)
 		{
-			return null;// table.Find(id);
+			using (var command = new SqlCommand("SELECT * FROM dbo.cats WHERE Id = " + id))
+			{
+				return (GetRecords(command)).FirstOrDefault();
+			}
 		}
 
 		public void Insert(T obj)
