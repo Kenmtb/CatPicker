@@ -59,9 +59,7 @@ namespace DAL.Repositories
 		public CatRecVM GetById(int id)
 		{
 			//Get a new cat record object (id=-1) or and existing cat record object
-			cvm.catRec = catRep.GetById(id);
-
-			
+			cvm.catRec = catRep.GetById(id);			
 
 			//Get drop list data
 			cvm.catPersonalityList = personalityRep.GetAll().ToList();
@@ -91,6 +89,7 @@ namespace DAL.Repositories
 			return cvm;
 		}
 
+		//New record
 		public void Insert(CatRecVM obj)
 		{
 			//Prepare a new cat record for editing - Get the drop list and default items.
@@ -98,15 +97,29 @@ namespace DAL.Repositories
 
 			//Insert cat record
 			catRep.Insert(obj.catRec);
-			//Also insert the cat record's details. This is because details data is in a separate table.
-			obj.detailRec.catId = obj.catRec.Id;
-			detailsRep.Insert(obj.detailRec);			
+
+			
+
+			//**Handle foriegn key tables
+			//Also insert the foriegn table details. This is because details data is in a separate table.
+			obj.detailRec.catId = catRep.getLastCatRecordID();
+			
+			//Update the foriegn key table (Master insert triggered creating foriegn key table entry for master ID but we need to store the master's data via update			
+			detailsRep.Insert(obj.detailRec);
+			
+			
 		}
 
+		//Update record
 		public void Save(CatRecVM obj)
 		{
+			//Preserve the foriegn keys that are not part of the UI
+			obj.catRec.catDetailsId = obj.detailRec.Id;
+			//obj.catRec.locationId = obj.locationRec.Id;
+
 			catRep.Save(obj.catRec);
 			detailsRep.Save(obj.detailRec);
+			
 		}
 
 		//public void Delete(object id)

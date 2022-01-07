@@ -71,7 +71,6 @@ C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\DAL.dll
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\BLL.pdb
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Globals.pdb
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Models.pdb
-C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Models.dll.config
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\EntityFramework.xml
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\EntityFramework.SqlServer.xml
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\System.Web.Helpers.xml
@@ -85,9 +84,10 @@ C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Newtonsoft.Json.xml
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Antlr3.Runtime.pdb
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\DAL.pdb
+C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.dll
+C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.pdb
+C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\Models.dll.config
 C:\Users\Ken\source\repos\CatPicker\CatPicker\bin\DAL.dll.config
 C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.csproj.AssemblyReference.cache
 C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.csproj.CoreCompileInputs.cache
 C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.csproj.CopyComplete
-C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.dll
-C:\Users\Ken\source\repos\CatPicker\CatPicker\obj\Debug\CatPicker.pdb

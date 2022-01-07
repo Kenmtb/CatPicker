@@ -1,6 +1,5 @@
 C:\Users\Ken\source\repos\CatPicker\Globals\bin\Debug\Globals.dll
 C:\Users\Ken\source\repos\CatPicker\Globals\bin\Debug\Globals.pdb
-C:\Users\Ken\source\repos\CatPicker\Globals\obj\Debug\Globals.csproj.AssemblyReference.cache
-C:\Users\Ken\source\repos\CatPicker\Globals\obj\Debug\Globals.csproj.CoreCompileInputs.cache
 C:\Users\Ken\source\repos\CatPicker\Globals\obj\Debug\Globals.dll
 C:\Users\Ken\source\repos\CatPicker\Globals\obj\Debug\Globals.pdb
+C:\Users\Ken\source\repos\CatPicker\Globals\obj\Debug\Globals.csprojResolveAssemblyReference.cache

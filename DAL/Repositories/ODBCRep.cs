@@ -11,20 +11,36 @@ using System.ComponentModel;
 namespace DAL.Repositories
 {
 	//https://www.danylkoweb.com/Blog/creating-a-repository-pattern-without-an-orm-A9
+	//********************* This is a base class repository for ADO Connection classes and CRUD methods helper classes
+	//These methods are the abstract class for CRUD's worker methods that perform the data operations
+
 	public abstract class ODBCRep<T> where T : class
 	{
-		public const string baseSQL = "SELECT * FROM dbo.cats";
-		public string conStrName;
-		SqlConnection conn;
+		//public string storageObj { get; set; }
+		public const string baseSQLString = "SELECT * FROM dbo.cats";
+		public int recID { get; set; }
+		public const string baseSQLIdString = "SELECT * FROM dbo.cats where Id = "; //Auto generate insert script
+		public string conStrName { get; set; }
+		
+
+		//SqlConnection conn;
 
 		//public ODBCRep(string conStrName)
 		//{
 		//	this.conStrName = conStrName;
 		//}
 
-		public SqlConnection getConnection(string connStr)
+
+		//********************************* ADO connection abstract methods
+
+		public string getConnectionString ()
 		{
-			conn = new SqlConnection(connStr);
+			return GetConnectionStringByName(conStrName);
+		}
+
+		public SqlConnection getConnection()
+		{
+			SqlConnection conn = new SqlConnection(getConnectionString());
 			if(conn.State == System.Data.ConnectionState.Closed)
 			{
 				conn.Open();
@@ -32,17 +48,17 @@ namespace DAL.Repositories
 			return conn;
 		}
 
-		public SqlCommand getCommand (SqlConnection conn, string sqlStr = null, List<SqlParameter> paramList = null)		
+		public SqlCommand getCommand (string sqlStr = null, List<SqlParameter> paramList = null)		
 		{
 			SqlCommand com = new SqlCommand();
-			com.Connection = conn;
+			com.Connection = getConnection();
 			if(sqlStr == null)
 			{
-				com.CommandText = baseSQL;
+				com.CommandText = baseSQLString;
 			}
 			else
 			{
-				com.CommandText = null;
+				com.CommandText = sqlStr;
 			}
 				
 			if(paramList != null)
@@ -55,6 +71,15 @@ namespace DAL.Repositories
 			return com;
 		}
 
+		public SqlCommand getCommandstring(string sqlStr = null, List<SqlParameter> paramList = null)
+		{
+			
+			SqlConnection con = getConnection();
+			SqlCommand cmd = getCommand(sqlStr, paramList);
+			return cmd;
+		}
+	
+
 		//public SqlDataReader getDataObject (string connStrName, string sqlStr=null, List<SqlParameter> paramList=null)
 		//{			
 		//	SqlDataReader dataReader;
@@ -65,25 +90,7 @@ namespace DAL.Repositories
 		//	return dataReader;
 		//}
 
-		public  DataTable getDataObject(string connStrName, string sqlStr = null, List<SqlParameter> paramList = null)
-		{
-			DataTable dt=new DataTable();
-			SqlDataReader sdr;
 
-			string connStr = GetConnectionStringByName(connStrName);
-			SqlConnection con = getConnection(connStr);
-			SqlCommand cmd = getCommand(con, sqlStr);
-			sdr = cmd.ExecuteReader();
-
-			//using ( con = getConnection(connStr))			
-			//	using ( cmd = getCommand(con, sqlStr))
-			//	{					
-			//		sdr = cmd.ExecuteReader();
-			//	}
-			
-			dt.Load(sdr);
-			return dt;
-		}
 
 		public string GetConnectionStringByName(string name)
 		{
@@ -102,21 +109,38 @@ namespace DAL.Repositories
 		}
 
 
+	
+
+		//*************************** Crud Helper methods *****************************************************
+
+		public DataTable getDataObject(string sqlStr = null, List<SqlParameter> paramList = null)
+		{
+			DataTable dt = new DataTable();
+			SqlCommand cmd;
+			SqlDataReader sdr;
+
+			cmd = getCommand(sqlStr, paramList);
+			sdr = cmd.ExecuteReader();
+
+			dt.Load(sdr);			
+			sdr.Close();		
+			return dt;
+		}
+
 		public virtual T PopulateRecord(DataRow reader)
 		{
 			return null;
 		}
 
 
-
-		protected IEnumerable<T> GetRecords(SqlCommand command, string sqlStr = null)
+		protected IEnumerable<T> GetRecords(string sqlStr=null, List<SqlParameter> paramList = null)
 		{
 			var list = new List<T>();
 			DataTable reader = null;
 
 			try
 			{
-				reader = getDataObject(conStrName, sqlStr);
+				reader = getDataObject(sqlStr,paramList);
 				try
 				{
 					if (reader.Rows.Count > 0)
@@ -129,16 +153,116 @@ namespace DAL.Repositories
 					}
 
 				}
-				finally { }//catch (Exception ex) { }
+				catch (Exception )
+				{
+					throw new Globals.CustomException("Record fetch failed.");
+				}
 			}
-			finally { }//catch (Exception ex) { }
+			catch (Exception ) 
+			{
+				throw new Globals.CustomException("Failed to build the required data object.");
+			}
 			
 			return list;
 		}
 
 
+		public virtual DataRow PopulateDataRow(T datarec, DataRow dr)
+		{
+			return null;
+		}
+
+		protected void SaveRecord (T rec)
+		{
+
+			//Venkat - Part 13 What is SqlCommandBuilder
+
+			try
+			{
+			SqlCommand cmd;
+
+				cmd = getCommand(baseSQLIdString + recID);
+				
+				SqlDataAdapter da = new SqlDataAdapter(cmd);
+				DataTable dt = new DataTable();
+			
+				da.Fill(dt);
+			//DataRow dr = dt.NewRow();
+
+			//dt.Rows.Add(PopulateDataRow(rec,dr));
+			DataRow dr = dt.Rows[0];
+			dr = PopulateDataRow(rec, dr);
+
+			SqlCommandBuilder cb = new SqlCommandBuilder(da);
+
+			da.Update(dt);
+			}
+			catch (Exception)
+			{
+				throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
+			}
+		}
+
+		protected int getLastCatRecordIDBase()
+		{
+			//Get the last cat record ID. Not the best way but needed because we do not use a SQL insert statement.
+			SqlCommand cmd = getCommand(" SELECT max(id) from cats");
+			int id = Convert.ToInt32(cmd.ExecuteScalar());
+			return id;
+		}
+
+		protected void InsertRecord(T rec)
+		{
+			//Venkat - Part 13 What is SqlCommandBuilder
+			try
+			{
+				SqlCommand cmd;
+				cmd = getCommand(baseSQLString);				
+				SqlDataAdapter da = new SqlDataAdapter(cmd);
+				DataTable dt = new DataTable();
+
+				da.Fill(dt);
+				DataRow dr = dt.Rows[0];
+				dr = PopulateDataRow(rec, dr);
+				SqlCommandBuilder cb = new SqlCommandBuilder(da);
+
+				//Add new record
+				da.UpdateCommand = cb.GetInsertCommand();
+				da.Update(dt);
+			}
+			catch (Exception ex)
+			{
+				//throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
+			}
+		}
 
 
+		protected void DeleteRecord(T rec)
+		{
+			try
+			{
+				SqlCommand cmd;
+				cmd = getCommand(baseSQLIdString);
+				SqlDataAdapter da = new SqlDataAdapter(cmd);
+				DataTable dt = new DataTable();
+
+				da.Fill(dt);
+				DataRow dr = dt.Rows[0];
+				dr = PopulateDataRow(rec, dr);
+				SqlCommandBuilder cb = new SqlCommandBuilder(da);
+
+				//Add new record
+				da.DeleteCommand = cb.GetDeleteCommand();
+				da.Update(dt);
+			}
+			catch (Exception ex)
+			{
+				//throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
+			}
+		}
+
+
+		//************************ Entity framework attempt - could not get filting to work with a text based where clause
 		//protected IEnumerable<T> GetRecords(SqlCommand command, string sqlStr = null)
 		//{
 		//	var list = new List<T>();

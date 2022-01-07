@@ -36,6 +36,7 @@ namespace CatPicker.Controllers
 			};
 		}
 
+		//*****Display
 		public ActionResult showAllCats()
 		{			
 			return View(bll.getAllCats());
@@ -56,6 +57,8 @@ namespace CatPicker.Controllers
 		//	return View(catRec);
 		//}
 
+
+		//*****Edit
 		[ActionName("editCat"), HttpGet]
 		public ActionResult editCatGet(int id)
 		{			
@@ -111,6 +114,8 @@ namespace CatPicker.Controllers
 			}
 		}
 
+
+		//*****Create
 		[ActionName("showNewCat"), HttpGet]
 		public ActionResult showNewCatGet()
 		{
