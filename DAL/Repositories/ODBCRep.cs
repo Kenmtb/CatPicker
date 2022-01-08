@@ -18,7 +18,8 @@ namespace DAL.Repositories
 	{
 		//public string storageObj { get; set; }
 		public const string baseSQLString = "SELECT * FROM dbo.cats";
-		public int recID { get; set; }
+		public const string baseSQLDeleteString = "DELETE FROM dbo.cats";
+		//public int recID { get; set; }
 		public const string baseSQLIdString = "SELECT * FROM dbo.cats where Id = "; //Auto generate insert script
 		public string conStrName { get; set; }
 		
@@ -172,7 +173,7 @@ namespace DAL.Repositories
 			return null;
 		}
 
-		protected void SaveRecord (T rec)
+		protected void SaveRecord (T rec, int id)
 		{
 
 			//Venkat - Part 13 What is SqlCommandBuilder
@@ -181,7 +182,7 @@ namespace DAL.Repositories
 			{
 			SqlCommand cmd;
 
-				cmd = getCommand(baseSQLIdString + recID);
+				cmd = getCommand(baseSQLIdString + id);
 				
 				SqlDataAdapter da = new SqlDataAdapter(cmd);
 				DataTable dt = new DataTable();
@@ -237,23 +238,24 @@ namespace DAL.Repositories
 		}
 
 
-		protected void DeleteRecord(T rec)
+		protected void DeleteRecord(int id)
 		{
 			try
 			{
 				SqlCommand cmd;
-				cmd = getCommand(baseSQLIdString);
+				cmd = getCommand(baseSQLString);
 				SqlDataAdapter da = new SqlDataAdapter(cmd);
 				DataTable dt = new DataTable();
-
 				da.Fill(dt);
-				DataRow dr = dt.Rows[0];
-				dr = PopulateDataRow(rec, dr);
-				SqlCommandBuilder cb = new SqlCommandBuilder(da);
 
-				//Add new record
+				//GetDeleteCommand must come before delete process!
+				SqlCommandBuilder cb = new SqlCommandBuilder(da);
 				da.DeleteCommand = cb.GetDeleteCommand();
-				da.Update(dt);
+
+				DataRow dr = dt.Rows[0];
+				dr = dt.AsEnumerable().FirstOrDefault(x => x.Field<int>("Id") == id);
+				dr.Delete();
+				da.Update(dt);				
 			}
 			catch (Exception ex)
 			{

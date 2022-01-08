@@ -122,6 +122,11 @@ namespace DAL.Repositories
 			
 		}
 
+		public void Delete(int id)
+		{
+			catRep.Delete(id);
+		}
+
 		//public void Delete(object id)
 		//{
 		//	T existing = table.Find(id);

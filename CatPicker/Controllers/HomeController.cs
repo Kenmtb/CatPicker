@@ -151,6 +151,13 @@ namespace CatPicker.Controllers
 			return View(catRec);
 		}
 
+		public ActionResult deleteCat(int id)
+		{
+			bll.deleteCat(id);
+			return RedirectToAction("showAllCats", "Home");
+		}
+		
+
 		//********Utilities
 		public ActionResult About()
 		{

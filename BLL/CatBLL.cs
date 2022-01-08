@@ -47,5 +47,10 @@ namespace BLL
 		{
 			VMrep.Insert(catVMRec);
 		}
+
+		public void deleteCat(int id)
+		{
+			VMrep.Delete(id);
+		}
 	}
 }

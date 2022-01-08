@@ -93,14 +93,19 @@ namespace DAL.Repositories
 		public void Save(Cat obj)
 		{
 			try
-			{				
-				recID = obj.Id;
-				SaveRecord(obj);
+			{							
+				SaveRecord(obj, obj.Id);
 			}
 			catch (Exception ex)
 			{
 				throw new Exception("Save failed. Changes are not saved ex:");
 			}
+		}
+
+
+		public void Delete(int id)
+		{			
+			DeleteRecord(id);
 		}
 
 		//public void Delete(object id)
