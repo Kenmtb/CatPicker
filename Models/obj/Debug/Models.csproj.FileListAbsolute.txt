@@ -9,4 +9,6 @@ C:\Users\Ken\source\repos\CatPicker\Models\bin\Debug\EntityFramework.xml
 C:\Users\Ken\source\repos\CatPicker\Models\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Ken\source\repos\CatPicker\Models\obj\Debug\Models.dll
 C:\Users\Ken\source\repos\CatPicker\Models\obj\Debug\Models.pdb
-C:\Users\Ken\source\repos\CatPicker\Models\obj\Debug\Models.csprojResolveAssemblyReference.cache
+C:\Users\Ken\source\repos\CatPicker\Models\obj\Debug\Models.csproj.AssemblyReference.cache
+C:\Users\Ken\source\repos\CatPicker\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+C:\Users\Ken\source\repos\CatPicker\Models\obj\Debug\Models.csproj.CopyComplete

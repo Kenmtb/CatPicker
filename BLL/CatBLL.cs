@@ -12,26 +12,21 @@ namespace BLL
     public class CatBLL
 	{
 		//DAL.MockRepositories.MockCatRepository<Cat> rep;
-		CatRepository<Cat> rep;
+		//CatRepository<Cat> rep;
 		CatRecVMRepository VMrep;
 
 		public CatBLL()
 		{
 			
 			//rep = new DAL.MockRepositories.MockCatRepository<Cat>();
-			rep = new CatRepository<Cat>();
+			//rep = new CatRepository<Cat>();
 			VMrep = new CatRecVMRepository();
 		}
 
 		public List<Cat> getAllCats()
 		{
-			return rep.GetAll().ToList();
+			return VMrep.GetAll().ToList();
 		}
-
-		//public CatVM getAllCats()
-		//{
-		//	return VMrep.GetAll();
-		//}
 
 		public CatRecVM getCatById(int id)
 		{

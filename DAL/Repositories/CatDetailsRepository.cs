@@ -1,70 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Models;
+using System.Data;
+
 
 namespace DAL.Repositories
 {
-
-	public class CatDetailsRepository<T> : ICatRepository<T> where T : class
+	public class CatDetailsRepository<T> : ODBCRep<CatDetail> where T : class
 	{
-
-		public Contexts.CatDetailContext _context = null;
-		public DbSet<T> table = null;
 
 		public CatDetailsRepository()
 		{
-			_context = new Contexts.CatDetailContext();
-			table = _context.Set<T>();
-			var catDetails = _context.catDetails.ToList();
+			base.conStrName = "CatDetailContext";
+			base.createSQLstrings("dbo.catDetails");
 		}
 
-		public CatDetailsRepository( Contexts.CatDetailContext _context)
+		//********************************** CRUD Interface methods
+
+		public IEnumerable<CatDetail> GetAll()
 		{
-			this._context = _context;
-			table = _context.Set<T>();			
+			return GetRecords();
 		}
 
-		public IEnumerable<T> GetAll()
+		public CatDetail GetById(int id)
 		{
-			return table.ToList();
+			return (GetRecords("SELECT * FROM dbo.catDetails WHERE Id = " + id)).FirstOrDefault();
 		}
 
-		public T GetById(object id)
-		{
-			return table.Find(id);
-		}
-		public void Insert(T obj)
+		public void Insert(CatDetail obj)
 		{
 			try
 			{
-				table.Add(obj);
-				_context.SaveChanges();
+				InsertRecord(obj);
 			}
 			catch (Exception)
 			{
 				throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
 			}
-		}	
-
-		public void Save(T obj) 
-		{			
-				using (var context = new DAL.Contexts.CatDetailContext())
-				{
-					//Attach the new record to the context and mark it dirty (changed)
-					context.Entry(obj).State = EntityState.Modified;
-					//Save the changes
-					context.SaveChanges();
-				}
 		}
 
-		public void Delete(object id)
+		public void Save(CatDetail obj)
 		{
-			T existing = table.Find(id);
-			table.Remove(existing);
-		}	
-	}
+			try
+			{
+				SaveRecord(obj, obj.Id);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Save failed. Changes are not saved ex:");
+			}
+		}
 
+
+		public void Delete(int id)
+		{
+			DeleteRecord(id);
+		}
+
+		//*************************************** CRUD Helpers
+		//Put datarow data into a record object
+		public override CatDetail PopulateRecord(DataRow dr)
+		{
+			CatDetail Rec = new CatDetail();
+
+			Rec.Id = Convert.ToInt32(dr["Id"]);
+			Rec.description = dr["description"].ToString();
+			Rec.catId = (int)dr["catId"];
+			
+			return Rec;
+		}
+
+		//Put data object data into a data row
+		public override DataRow PopulateDataRow(CatDetail datarec, DataRow dr)
+		{
+			DataSet ds = new DataSet();
+
+			dr["description"] = datarec.description;
+			dr["catId"] = datarec.catId;
+			return dr;
+		}
+
+		public int getLastCatRecordID()
+		{
+			return getLastCatRecordIDBase();
+		}
+	}
 }

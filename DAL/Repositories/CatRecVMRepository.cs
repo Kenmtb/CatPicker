@@ -46,14 +46,16 @@ namespace DAL.Repositories
 			cvm.locationRec = new CatLocation();
 		}
 
-		void Delete(object id)
-		{
-			throw new NotImplementedException();
-		}
+		//void Delete(object id)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
-		public CatRecVM GetAll()
+		public List<Cat> GetAll()
 		{
-			throw new NotImplementedException();
+			return catRep.GetAll().ToList();
+			
+			//throw new NotImplementedException();
 		}
 
 		public CatRecVM GetById(int id)
@@ -97,9 +99,7 @@ namespace DAL.Repositories
 
 			//Insert cat record
 			catRep.Insert(obj.catRec);
-
 			
-
 			//**Handle foriegn key tables
 			//Also insert the foriegn table details. This is because details data is in a separate table.
 			obj.detailRec.catId = catRep.getLastCatRecordID();
@@ -115,8 +115,7 @@ namespace DAL.Repositories
 		{
 			//Preserve the foriegn keys that are not part of the UI
 			obj.catRec.catDetailsId = obj.detailRec.Id;
-			//obj.catRec.locationId = obj.locationRec.Id;
-
+			
 			catRep.Save(obj.catRec);
 			detailsRep.Save(obj.detailRec);
 			
@@ -125,13 +124,10 @@ namespace DAL.Repositories
 		public void Delete(int id)
 		{
 			catRep.Delete(id);
+			//Find the cat record's detail record ID
+			//int detID = 
+			//detailsRep.Delete(id);
 		}
-
-		//public void Delete(object id)
-		//{
-		//	T existing = table.Find(id);
-		//	table.Remove(existing);
-		//}
 
 	}
 

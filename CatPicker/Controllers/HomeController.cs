@@ -38,15 +38,16 @@ namespace CatPicker.Controllers
 
 		//*****Display
 		public ActionResult showAllCats()
-		{			
+		{
+			var RecList = bll.getAllCats();
 			return View(bll.getAllCats());
 		}
 
 
 		public ActionResult getCat(int id)
 		{ 
-			var catRec = bll.getCatById(id);			
-			return View("editCat",catRec);
+			var VMRec = bll.getCatById(id);			
+			return View("editCat",VMRec);
 		}
 
 
@@ -62,9 +63,9 @@ namespace CatPicker.Controllers
 		[ActionName("editCat"), HttpGet]
 		public ActionResult editCatGet(int id)
 		{			
-			var catRec = bll.getCatById(id);
-			TempData["VM"] = catRec;
-			return View("editCat", catRec);
+			var VMRec = bll.getCatById(id);
+			TempData["VM"] = VMRec;
+			return View("editCat", VMRec);
 		}
 
 		[ActionName("editCat"), HttpPost]
@@ -97,20 +98,22 @@ namespace CatPicker.Controllers
 			}
 			else
 			{
+				vmRec = (CatRecVM)TempData["VM"];
+				TempData["VM"] = vmRec;
 				return View(vmRec);
 			}
 		}
 
-		public ActionResult saveCat(CatRecVM catRec)
+		public ActionResult saveCat(CatRecVM VMRec)
 		{			
 			if (ModelState.IsValid)
 			{
-				bll.saveCat(catRec);
+				bll.saveCat(VMRec);
 				return RedirectToAction("showAllCats", "Home");
 			}
 			else
 			{
-				return View(catRec);
+				return View(VMRec);
 			}
 		}
 
@@ -120,35 +123,35 @@ namespace CatPicker.Controllers
 		public ActionResult showNewCatGet()
 		{
 			//Get a new record with list and default items
-			CatRecVM newCatRec;
-			newCatRec =  bll.getCatById(-1);
-			TempData["VM"] = newCatRec;
-			return View(newCatRec);
+			CatRecVM VMRec;
+			VMRec =  bll.getCatById(-1);
+			TempData["VM"] = VMRec;
+			return View(VMRec);
 		}
 
 		[ActionName("showNewCat"), HttpPost]
-		public ActionResult showNewCatPost(CatRecVM catVMRec)
+		public ActionResult showNewCatPost(CatRecVM VMRec)
 		
 		{
 			try
 			{				
-				bll.addCat(catVMRec);
+				bll.addCat(VMRec);
 			}
 			catch (Globals.CustomException ex)
 			{				
 				TempData["msg"] = ex.Message;
-				catVMRec = (CatRecVM)TempData["VM"];
-				TempData["VM"] = catVMRec;				
-				return View("showNewCat", catVMRec);
+				VMRec = (CatRecVM)TempData["VM"];
+				TempData["VM"] = VMRec;				
+				return View("showNewCat", VMRec);
 				//return RedirectToAction("showNewCat", "Home");
 			}
 			//New cat record save successful
 			return RedirectToAction("showAllCats", "Home");
 		}
 
-		public ActionResult saveCatConfirmationMDL(Cat catRec)
+		public ActionResult saveCatConfirmationMDL(Cat Rec)
 		{
-			return View(catRec);
+			return View(Rec);
 		}
 
 		public ActionResult deleteCat(int id)

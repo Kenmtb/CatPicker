@@ -58,6 +58,7 @@
     <Compile Include="Models\CatPersonality.cs" />
     <Compile Include="Models\DELICats.cs" />
     <Compile Include="Models\Junk.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CatRecVM.cs" />
   </ItemGroup>

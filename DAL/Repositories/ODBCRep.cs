@@ -16,23 +16,26 @@ namespace DAL.Repositories
 
 	public abstract class ODBCRep<T> where T : class
 	{
-		//public string storageObj { get; set; }
-		public const string baseSQLString = "SELECT * FROM dbo.cats";
-		public const string baseSQLDeleteString = "DELETE FROM dbo.cats";
-		//public int recID { get; set; }
-		public const string baseSQLIdString = "SELECT * FROM dbo.cats where Id = "; //Auto generate insert script
+		private string baseSQLString;
+		private string baseSQLDeleteString;
+		private string baseSQLIdString;
+		private string baseSQLGetLastRecordString;
+
 		public string conStrName { get; set; }
 		
-
-		//SqlConnection conn;
-
-		//public ODBCRep(string conStrName)
-		//{
-		//	this.conStrName = conStrName;
-		//}
-
-
 		//********************************* ADO connection abstract methods
+
+		public void createSQLstrings(string tableName)
+		{
+			baseSQLString = "SELECT * FROM " + tableName;
+			baseSQLDeleteString = "DELETE FROM " + tableName;
+			baseSQLIdString = "SELECT * FROM " + tableName + " where Id = ";
+
+			//SQL for child tables
+			baseSQLGetLastRecordString = " SELECT max(id) from " + tableName; //adding child table data
+			
+	}
+
 
 		public string getConnectionString ()
 		{
@@ -51,6 +54,14 @@ namespace DAL.Repositories
 
 		public SqlCommand getCommand (string sqlStr = null, List<SqlParameter> paramList = null)		
 		{
+			////test setup of filter
+			//sqlStr = "Select * from dbo.cats where gender = @gender";
+			//paramList = new List<SqlParameter>();
+			//SqlParameter sp = new SqlParameter();
+			//sp.ParameterName = "@gender";
+			//sp.Value = "Male";
+			//paramList.Add(sp);
+
 			SqlCommand com = new SqlCommand();
 			com.Connection = getConnection();
 			if(sqlStr == null)
@@ -80,19 +91,6 @@ namespace DAL.Repositories
 			return cmd;
 		}
 	
-
-		//public SqlDataReader getDataObject (string connStrName, string sqlStr=null, List<SqlParameter> paramList=null)
-		//{			
-		//	SqlDataReader dataReader;
-		//	string connStr = GetConnectionStringByName(connStrName);
-		//	SqlConnection con = getConnection(connStr);
-		//	SqlCommand cmd = getCommand(con,sqlStr);
-		//	dataReader = cmd.ExecuteReader();
-		//	return dataReader;
-		//}
-
-
-
 		public string GetConnectionStringByName(string name)
 		{
 			// Assume failure.
@@ -130,6 +128,7 @@ namespace DAL.Repositories
 
 		public virtual T PopulateRecord(DataRow reader)
 		{
+
 			return null;
 		}
 

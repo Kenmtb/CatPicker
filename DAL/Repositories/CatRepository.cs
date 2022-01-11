@@ -15,33 +15,20 @@ namespace DAL.Repositories
 	public class CatRepository<T> : ODBCRep<Cat> where T : class
 	{
 
-		public Contexts.CatsContext _context = null;
+		//public Contexts.CatsContext _context = null;
 		//public DbSet<T> table = null;
 		//SqlDataReader dr;
-		List<T> table;
-		T catRec;
+		//List<T> table;
+		//T catRec;
 		 
 
 		public CatRepository()
 		{
-
 			base.conStrName = "CatsContext";
-			//base.getConnectionString("CatsContext");
+			base.createSQLstrings("dbo.cats");				
 		}
 
-		public CatRepository( string sqlStr)
-		{
-			
-			//this._context = _context;
-			//table = _context.Set<T>();			
-		}
-
-		void Delete(object id)
-		{
-			throw new NotImplementedException();
-		}
-
-
+	
 
 		//********************************** CRUD Interface methods
 
@@ -129,7 +116,7 @@ namespace DAL.Repositories
 			catRec.name = dr["name"].ToString();
 			catRec.breedId = (object)dr["breedId"] == DBNull.Value ? null : (int?)dr["breedId"];
 			catRec.locationId =(object)dr["locationId"] == DBNull.Value ? 1 : Convert.ToInt32(dr["locationId"]);// Convert.ToInt32(dr["locationId"]);
-			catRec.catDetailsId = (object)dr["catDetailsId"] == DBNull.Value ? null : (int?)dr["catDetailsId"];   //!dr.IsDBNull(3) ? (Int32?)dr.GetInt32(3) : null;
+			//catRec.catDetailsId = (object)dr["catDetailsId"] == DBNull.Value ? null : (int?)dr["catDetailsId"];   //!dr.IsDBNull(3) ? (Int32?)dr.GetInt32(3) : null;
 			catRec.catPersonalityId = (object)dr["catPersonalityId"] == DBNull.Value ? null : (int?)dr["catPersonalityId"];
 			catRec.age = (object)dr["age"] == DBNull.Value ? null : (int?)dr["age"];
 			catRec.pic = dr["pic"].ToString();
@@ -154,7 +141,7 @@ namespace DAL.Repositories
 			dr["name"] = datarec.name;
 			dr["breedId"] = datarec.breedId;
 			//dr["locationId"] = datarec.locationId;
-			if (datarec.catDetailsId != null) dr["catDetailsId"] = datarec.catDetailsId;  //Foriegn key dependancy, will be populated after foriegn table gets it's id. // == null ? 0 : datarec.catDetailsId; ;
+			//if (datarec.catDetailsId != null) dr["catDetailsId"] = datarec.catDetailsId;  //Foriegn key dependancy, will be populated after foriegn table gets it's id. // == null ? 0 : datarec.catDetailsId; ;
 			dr["catPersonalityId"] = datarec.catPersonalityId;
 			dr["age"] = datarec.age;
 			dr["pic"] = datarec.pic;
