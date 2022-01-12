@@ -1,0 +1,10 @@
+C:\Users\Ken\source\repos\CatPicker\SQL\bin\Debug\SQL.dll
+C:\Users\Ken\source\repos\CatPicker\SQL\bin\Debug\SQL.pdb
+C:\Users\Ken\source\repos\CatPicker\SQL\bin\Debug\Models.dll
+C:\Users\Ken\source\repos\CatPicker\SQL\bin\Debug\Models.pdb
+C:\Users\Ken\source\repos\CatPicker\SQL\bin\Debug\Models.dll.config
+C:\Users\Ken\source\repos\CatPicker\SQL\obj\Debug\SQL.csproj.AssemblyReference.cache
+C:\Users\Ken\source\repos\CatPicker\SQL\obj\Debug\SQL.csproj.CoreCompileInputs.cache
+C:\Users\Ken\source\repos\CatPicker\SQL\obj\Debug\SQL.csproj.CopyComplete
+C:\Users\Ken\source\repos\CatPicker\SQL\obj\Debug\SQL.dll
+C:\Users\Ken\source\repos\CatPicker\SQL\obj\Debug\SQL.pdb

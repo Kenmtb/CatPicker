@@ -27,7 +27,11 @@ namespace DAL.Repositories
 
 		public CatDetail GetById(int id)
 		{
-			return (GetRecords("SELECT * FROM dbo.catDetails WHERE Id = " + id)).FirstOrDefault();
+			// id = -1 means a new record is requested for the editor, otherwise return a record
+			if (id == -1)
+				return new CatDetail();
+			else
+				return GetRecordByID(id);
 		}
 
 		public void Insert(CatDetail obj)
@@ -83,9 +87,9 @@ namespace DAL.Repositories
 			return dr;
 		}
 
-		public int getLastCatRecordID()
+		public int getLastRecordID()
 		{
-			return getLastCatRecordIDBase();
+			return getLastRecordIDBase();
 		}
 	}
 }

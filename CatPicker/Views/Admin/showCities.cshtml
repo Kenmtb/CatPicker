@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Models.Models.City>
+
+@{
+    ViewBag.Title = "showCities";
+}
+
+<h2>showCities</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.stateID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cityName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.stateID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cityName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

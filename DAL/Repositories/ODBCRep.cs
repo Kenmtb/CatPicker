@@ -20,6 +20,7 @@ namespace DAL.Repositories
 		private string baseSQLDeleteString;
 		private string baseSQLIdString;
 		private string baseSQLGetLastRecordString;
+		private string baseSQLGetLastRecordIDString;
 
 		public string conStrName { get; set; }
 		
@@ -30,6 +31,7 @@ namespace DAL.Repositories
 			baseSQLString = "SELECT * FROM " + tableName;
 			baseSQLDeleteString = "DELETE FROM " + tableName;
 			baseSQLIdString = "SELECT * FROM " + tableName + " where Id = ";
+			baseSQLGetLastRecordIDString = " SELECT max(id) from " + tableName;
 
 			//SQL for child tables
 			baseSQLGetLastRecordString = " SELECT max(id) from " + tableName; //adding child table data
@@ -132,7 +134,12 @@ namespace DAL.Repositories
 			return null;
 		}
 
+		protected T GetRecordByID(int id)
+		{
+			return (T)GetRecords(baseSQLIdString + id).FirstOrDefault();			
+		}
 
+		//Can return all records or records based on a query string plus optional where clause with paramerter list
 		protected IEnumerable<T> GetRecords(string sqlStr=null, List<SqlParameter> paramList = null)
 		{
 			var list = new List<T>();
@@ -203,10 +210,10 @@ namespace DAL.Repositories
 			}
 		}
 
-		protected int getLastCatRecordIDBase()
+		protected int getLastRecordIDBase()
 		{
-			//Get the last cat record ID. Not the best way but needed because we do not use a SQL insert statement.
-			SqlCommand cmd = getCommand(" SELECT max(id) from cats");
+			//Get the last record ID. Not the best way but needed because we do not use a SQL insert statement.
+			SqlCommand cmd = getCommand(baseSQLGetLastRecordIDString);
 			int id = Convert.ToInt32(cmd.ExecuteScalar());
 			return id;
 		}

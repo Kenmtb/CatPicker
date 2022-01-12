@@ -8,12 +8,13 @@ using System.Data;
 
 namespace DAL.Repositories
 {
-	public class StateRepository<T> : ODBCRep<State> where T : class, IRepository<T>
+	public class StateRepository<T> : ODBCRep<State> where T : class
 	{
 
 		public StateRepository()
 		{
-			base.conStrName = "StatesContext";
+			base.conStrName = "CatsContext";
+			base.createSQLstrings("dbo.states");
 		}
 
 		public void Delete(int id)
@@ -26,9 +27,13 @@ namespace DAL.Repositories
 			return GetRecords();
 		}
 
-		public State GetById(object id)
+		public State GetById(int id)
 		{
-			return (GetRecords("SELECT * FROM dbo.States WHERE Id = " + id)).FirstOrDefault();
+			// id = -1 means a new record is requested for the editor, otherwise return a record
+			if (id == -1)
+				return new State();
+			else
+				return GetRecordByID(id);
 		}
 
 		public void Insert(State obj)
@@ -54,5 +59,29 @@ namespace DAL.Repositories
 				throw new Exception("Save failed. Changes are not saved ex:");
 			}
 		}
+
+		//*************************************** CRUD Helpers
+		//Put datarow data into a record object
+		public override State PopulateRecord(DataRow dr)
+		{
+			State Rec = new State();
+			Rec.Id = Convert.ToInt32(dr["Id"]);
+			Rec.name = dr["name"].ToString();			
+			return Rec;
+		}
+
+		//Put data object data into a data row
+		public override DataRow PopulateDataRow(State datarec, DataRow dr)
+		{
+			DataSet ds = new DataSet();
+			dr["name"] = datarec.name;			
+			return dr;
+		}
+
+		public int getLastRecordID()
+		{
+			return getLastRecordIDBase();
+		}
+
 	}
 }

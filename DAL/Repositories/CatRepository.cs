@@ -32,30 +32,19 @@ namespace DAL.Repositories
 
 		//********************************** CRUD Interface methods
 
-		//public IEnumerable<Cat> GetAll()
-		//{
-		//	using (var command = new SqlCommand("SELECT * FROM dbo.cats"))
-		//	{
-		//		return GetRecords(command);
-		//	}			
-		//}
-
 		public IEnumerable<Cat> GetAll()
 		{		
 				return GetRecords();		
 		}
 
-		//public Cat GetById(int id)
-		//{
-		//	using (var command = new SqlCommand("SELECT * FROM dbo.cats WHERE Id = " + id))
-		//	{
-		//		return (GetRecords(command)).FirstOrDefault();
-		//	}
-		//}
-
 		public Cat GetById(int id)
-		{		
-				return (GetRecords("SELECT * FROM dbo.cats WHERE Id = " + id)).FirstOrDefault();
+		{
+			//return (GetRecords("SELECT * FROM dbo.cats WHERE Id = " + id)).FirstOrDefault();
+			// id = -1 means a new record is requested for the editor, otherwise return a record
+			if (id == -1)
+				return new Cat();
+			else
+				return GetRecordByID(id);
 		}
 
 		public void Insert(Cat obj)
@@ -155,9 +144,9 @@ namespace DAL.Repositories
 			return dr;
 		}
 
-		public int getLastCatRecordID()
+		public int getLastRecordID()
 		{
-			return getLastCatRecordIDBase();
+			return getLastRecordIDBase();
 		}
 
 	}

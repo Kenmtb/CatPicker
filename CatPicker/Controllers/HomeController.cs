@@ -28,12 +28,9 @@ namespace CatPicker.Controllers
 
 		public List<string> Index()
 		{
-			return new List<string>()
-			{
-				"aaa",
-				"bbb",
-				"ccc"
-			};
+
+			bll.test();
+			return null;
 		}
 
 		//*****Display
@@ -122,6 +119,9 @@ namespace CatPicker.Controllers
 		[ActionName("showNewCat"), HttpGet]
 		public ActionResult showNewCatGet()
 		{
+
+			//bll.test();
+
 			//Get a new record with list and default items
 			CatRecVM VMRec;
 			VMRec =  bll.getCatById(-1);

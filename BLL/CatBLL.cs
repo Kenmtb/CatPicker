@@ -47,5 +47,10 @@ namespace BLL
 		{
 			VMrep.Delete(id);
 		}
+
+		public void test()
+		{
+			VMrep.Test();
+		}
 	}
 }

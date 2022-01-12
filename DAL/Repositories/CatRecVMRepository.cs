@@ -53,6 +53,7 @@ namespace DAL.Repositories
 
 		public List<Cat> GetAll()
 		{
+			Test();
 			return catRep.GetAll().ToList();
 			
 			//throw new NotImplementedException();
@@ -102,7 +103,7 @@ namespace DAL.Repositories
 			
 			//**Handle foriegn key tables
 			//Also insert the foriegn table details. This is because details data is in a separate table.
-			obj.detailRec.catId = catRep.getLastCatRecordID();
+			obj.detailRec.catId = catRep.getLastRecordID();
 			
 			//Update the foriegn key table (Master insert triggered creating foriegn key table entry for master ID but we need to store the master's data via update			
 			detailsRep.Insert(obj.detailRec);
@@ -114,7 +115,7 @@ namespace DAL.Repositories
 		public void Save(CatRecVM obj)
 		{
 			//Preserve the foriegn keys that are not part of the UI
-			obj.catRec.catDetailsId = obj.detailRec.Id;
+			//obj.catRec.catDetailsId = obj.detailRec.Id;
 			
 			catRep.Save(obj.catRec);
 			detailsRep.Save(obj.detailRec);
@@ -129,6 +130,19 @@ namespace DAL.Repositories
 			//detailsRep.Delete(id);
 		}
 
+
+		public void Test()
+		{
+			//This shows how to perform a sql join of 2 tables from different repositories
+			List < Cat > cl = new List<Cat>();
+			cl = catRep.GetAll().ToList();
+
+			List<CatDetail> dl = new List<CatDetail>();
+			dl = detailsRep.GetAll().ToList();
+
+			int? did = dl.First(x => x.Id == 6).catId;
+			string catname = cl.First(x => x.Id == did).name;
+		}
 	}
 
 }

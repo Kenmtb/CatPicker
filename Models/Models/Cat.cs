@@ -15,7 +15,7 @@ namespace Models.Models
 		public string name { get; set; }
 		public Nullable<int> breedId { get; set; }
 		public int locationId { get; set; }
-		public Nullable<int> catDetailsId { get; set; }
+		//public Nullable<int> catDetailsId { get; set; }
 		public Nullable<int> catPersonalityId { get; set; }							 
 		public Nullable<int> age { get; set; }
 		public string pic { get; set; }
