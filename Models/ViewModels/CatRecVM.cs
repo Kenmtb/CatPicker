@@ -11,26 +11,16 @@ namespace Models.ViewModels
 	[NotMapped]
 	public class CatRecVM
 	{
-
-		//Models
-		public Cat catRec { get; set; }
-		public CatDetail detailRec { get; set; }
-		public CatPersonality personalityRec { get; set; }
-		public CatBreed breedRec { get; set; }
-		public CatLocation locationRec { get; set; }
-
-		//Extended view model fields
-
-		//Edit fields
-		//public string catDetail { get; set; }		
-		//public string catPersonalityType { get; set; }
-		//public string catBreed { get; set; }
-		//public string catLocation { get; set; }
+	
+		//Record list
+		public List<Cat> catList { get; set; }
+		
+		//Foriegn fields
+		public string breedName { get; set; }
+		public int breedId { get; set; }
 
 		//Drop downs and foriegn key lookup lists
-		public List<CatPersonality> catPersonalityList { get; set; }
-		public List<CatDetail> catDetailList { get; set; }
 		public List<CatBreed> catBreedList { get; set; }
-		public List<CatLocation> catLocationList { get; set; }
+	
 	}
 }

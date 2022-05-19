@@ -1,0 +1,124 @@
+﻿@model Models.ViewModels.CatDetailsVM
+
+@{
+  ViewBag.Title = "editCatDetails";
+}
+
+<h2>editCatDetails</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.AntiForgeryToken()
+
+  <div class="form-horizontal">
+    <h4>CatDetailsVM</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+      @Html.LabelFor(model => model.catId, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EditorFor(model => model.catId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.catId, "", new { @class = "text-danger" })
+      </div>
+    </div>
+
+    <div class="form-group">
+      @Html.LabelFor(model => model.catName, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EditorFor(model => model.catName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.catName, "", new { @class = "text-danger" })
+      </div>
+    </div>
+
+    <div class="form-group">
+      @Html.LabelFor(model => model.stateList, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.DropDownListFor(model => model.stateId, new SelectList(Model.stateList, "Id", "name", Model.stateId), "--- Select ---", new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.stateList[0].name, "X", new { @class = "text-danger" })
+      </div>
+    </div>
+
+    <div class="form-group">
+      @Html.LabelFor(model => model.cityList, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.DropDownListFor(model => model.cityId, new SelectList(Model.cityList, "Id", "cityName", Model.cityId), "--- Select ---", new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.cityList[0].cityName, "X", new { @class = "text-danger" })
+      </div>
+    </div>
+
+    <div class="form-group">
+      @Html.LabelFor(model => model.locationList, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.DropDownListFor(model => model.locationId, new SelectList(Model.locationList, "Id", "locationName", Model.locationId), "--- Select ---", new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.locationList[0].locationName, "X", new { @class = "text-danger" })
+      </div>
+    </div>
+
+    <div class="form-group">
+      @Html.LabelFor(model => model.catPersonality, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EditorFor(model => model.catPersonality, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.catPersonality, "", new { @class = "text-danger" })
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn btn-default" />
+      </div>
+    </div>
+  </div>
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#stateId").change(function () {
+      $.get("/CatPicker/Home/getCityList", { id: $("#stateId").val() }, function (data) {
+        $("#cityId").empty();
+        $.each(data, function (index, row) {
+          $("#cityId").append("<option value='" + row.cityId + "'>" + row.cityName + "</option>")
+        })
+      })
+    })
+  })
+
+
+  /*NOTE! the ID tag in the .change statement below needs to be a simple property of the model, otherwise the framework will create a mangled version EX using stateList[0].Id creates an id tag=stateList_0__Id */
+  /*This was solved by using model.stateID in the dropdownfor making the id tag = stateId */
+  //$(document).ready(function () {
+  //  $("#stateId").change(function () {
+  //    var cityId = $(this).val();
+  //    debugger
+  //    $.ajax({
+  //      type: "post",
+  //      url: "/CatPicker/Home/getCityList?id=" + cityId,
+  //      contentType: "html",
+  //      success: function (response) {
+  //        debugger
+  //        $("#cityId").empty();
+  //        $("#cityId").append(response);
+  //      }
+  //    })
+  //  })
+  //})
+
+ 
+      
+      
+
+</script>
+
+<div>
+  @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@*<div class="form-group">
+    @Html.LabelFor(model => model.cityList, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.DropDownListFor(model => model.cityList[0].Id, new SelectList(Model.cityList, "Id", "cityName", Model.cityId), "--- Select ---", new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.cityList[0].cityName, "X", new { @class = "text-danger" })
+    </div>
+  </div>*@
+

@@ -1,8 +1,5 @@
 ﻿@model Models.ViewModels.CatRecVM
 
-@{
-  ViewBag.Title = "showNewCat";
-}
 
 <h2>Add a Cat</h2>
 
@@ -10,63 +7,64 @@
 {
   @Html.AntiForgeryToken()
 
-  <div class="form-horizontal">
+<div class="form-horizontal">
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.catRec.Id)
+  <hr />
+  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  @Html.HiddenFor(model => model.catList[0].Id)
 
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.name, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.name, "", new { @class = "text-danger" })
-      </div>
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].name, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].name, "", new { @class = "text-danger" })
     </div>
+  </div>
 
 
-    <div class="form-group">
+  @*<div class="form-group">
       @Html.LabelFor(model => model.catPersonalityList[0].personalityType, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
         @Html.DropDownListFor(model => model.catRec.catPersonalityId, new SelectList(Model.catPersonalityList, "Id", "personalityType", 2), new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.catPersonalityList[0].personalityType, "", new { @class = "text-danger" })
       </div>
-    </div>
+    </div>*@
 
-    <div class="form-group">
-      @Html.LabelFor(model => model.catBreedList[0].breedName, htmlAttributes: new { @class = "control-label col-md-2" })
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catBreedList[0].breedName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.DropDownListFor(model => model.catList[0].breedId, new SelectList(Model.catBreedList, "Id", "breedName", Model.catList[0].breedId), new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catBreedList[0].breedName, "X", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  @*<div class="form-group">
+      @Html.LabelFor(model => model.catDetailList[0].description, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
-        @Html.DropDownListFor(model => model.catRec.breedId, new SelectList(Model.catBreedList, "Id", "breedName", 2), new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catBreedList[0].breedName, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(model => model.catRec.catDetailsId, new SelectList(Model.catDetailList, "Id", "description", 2), new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.catDetailList[0].description, "", new { @class = "text-danger" })
       </div>
-    </div>
+    </div>*@
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.catDetailList[0].description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-          @Html.DropDownListFor(model => model.catRec.catDetailsId, new SelectList(Model.catDetailList, "Id", "description", 2), new { htmlAttributes = new { @class = "form-control" } })
-          @Html.ValidationMessageFor(model => model.catDetailList[0].description, "", new { @class = "text-danger" })
-        </div>
-      </div>*@
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.catRec.locationId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-          @Html.EditorFor(model => model.catRec.locationId, new { htmlAttributes = new { @class = "form-control" } })
-          @Html.ValidationMessageFor(model => model.catRec.locationId, "", new { @class = "text-danger" })
-        </div>
-      </div>*@
+  @*<div class="form-group">
+      @Html.LabelFor(model => model.catRec.locationId, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EditorFor(model => model.catRec.locationId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.catRec.locationId, "", new { @class = "text-danger" })
+      </div>
+    </div>*@
 
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.catDetail, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-          @Html.EditorFor(model => model.catDetail, new { htmlAttributes = new { @class = "form-control" } })
-          @Html.ValidationMessageFor(model => model.catDetail, "", new { @class = "text-danger" })
-        </div>
-      </div>*@
+  @*<div class="form-group">
+      @Html.LabelFor(model => model.catDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EditorFor(model => model.catDetail, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.catDetail, "", new { @class = "text-danger" })
+      </div>
+    </div>*@
 
-    <div class="form-group">
+  @*<div class="form-group">
       @Html.LabelFor(model => model.detailRec.description, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
         @Html.EditorFor(model => model.detailRec.description, new { htmlAttributes = new { @class = "form-control" } })
@@ -74,79 +72,71 @@
         @Html.HiddenFor(model => model.detailRec.Id)
         @Html.HiddenFor(model => model.detailRec.catId)
       </div>
-    </div>
+    </div>*@
 
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.age, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.age, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.age, "", new { @class = "text-danger" })
-      </div>
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].age, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].age, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].age, "", new { @class = "text-danger" })
     </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.pic, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.pic, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.pic, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.gender, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.gender, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.gender, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.mainColor, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.mainColor, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.mainColor, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.secondColor, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.secondColor, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.secondColor, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.thirdColor, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.thirdColor, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.thirdColor, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.weight, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.weight, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.weight, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.catRec.arrivalDate, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.catRec.arrivalDate, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.catRec.arrivalDate, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    @*<div class="form-group">*@
-    <div class="col-md-offset-2 col-md-10">
-      <input type="button" id="btnSave" onclick="saveCat()" value="Save" class="btn btn-default" />
-      @*<input type="submit" value="Save" class="btn btn-default" />*@
-    </div>
-    @*</div>*@
   </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].pic, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].pic, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].pic, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].gender, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].gender, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].gender, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].mainColor, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].mainColor, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].mainColor, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].secondColor, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].secondColor, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].secondColor, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].thirdColor, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].thirdColor, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].thirdColor, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.catList[0].arrivalDate, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.EditorFor(model => model.catList[0].arrivalDate, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(model => model.catList[0].arrivalDate, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  @*<div class="form-group">*@
+  <div class="col-md-offset-2 col-md-10">
+    <input type="button" id="btnSave" onclick="saveCat()" value="Save" class="btn btn-default" />
+    @*<input type="submit" value="Save" class="btn btn-default" />*@
+  </div>
+  @*</div>*@
+</div>
 
 
 
@@ -187,5 +177,5 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <div>
-  @Html.ActionLink("Back to List", "Index")
+  @Html.ActionLink("Back to List", "showAllCats")
 </div>

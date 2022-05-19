@@ -5,19 +5,27 @@ using Models.ViewModels;
 using BLL;
 using System;
 
+//Todo: Add cascading dropdowns for State, city, location
 
 namespace CatPicker.Controllers
 {
 	public class HomeController : Controller
 	{
 		
-		BLL.CatBLL bll;
+		CatBLL catBLL;
+		CatDetailsBLL catDetailsBLL;
+		CatDetailPicBLL CatDetailPicBLL;
 
 		public HomeController()
 		{
+			
+
 			// the terrible hack
 			var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
-			bll = new BLL.CatBLL();
+			catBLL = new CatBLL();
+			catDetailsBLL = new CatDetailsBLL();
+			CatDetailPicBLL = new CatDetailPicBLL();
+
 		}
 
 		//
@@ -29,24 +37,36 @@ namespace CatPicker.Controllers
 		public List<string> Index()
 		{
 
-			bll.test();
+			catBLL.test();
 			return null;
 		}
 
 		//*****Display
 		public ActionResult showAllCats()
-		{
-			var RecList = bll.getAllCats();
-			return View(bll.getAllCats());
+		{			
+			var RecList = catBLL.getAllCats();
+			return View(catBLL.getAllCats());
 		}
 
 
 		public ActionResult getCat(int id)
 		{ 
-			var VMRec = bll.getCatById(id);			
+			var VMRec = catBLL.getCatById(id);			
 			return View("editCat",VMRec);
 		}
 
+
+		public ActionResult showCatDetails(int id)
+		{
+			var VMRec =  catDetailsBLL.getById(id);
+			return View("showCatDetails", VMRec);
+		}
+
+		public ActionResult showCatDetailPics (int id)
+		{
+			var VMRec = CatDetailPicBLL.getById(id);
+			return View("showCatDetailPics", VMRec);
+		}
 
 		//[ActionName("editCat"), HttpGet]
 		//public ActionResult editCatGet(CatRecVM catRec)
@@ -60,34 +80,34 @@ namespace CatPicker.Controllers
 		[ActionName("editCat"), HttpGet]
 		public ActionResult editCatGet(int id)
 		{			
-			var VMRec = bll.getCatById(id);
-			TempData["VM"] = VMRec;
-			return View("editCat", VMRec);
+			var Cat = catBLL.getCatById(id);
+			TempData["VM"] = Cat;
+			return View("editCat", Cat);
 		}
 
 		[ActionName("editCat"), HttpPost]
-		public ActionResult editCatPost(CatRecVM vmRec)
+		public ActionResult editCatPost(CatRecVM Rec)
 		{
 			
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					bll.saveCat(vmRec);
+					catBLL.saveCat(Rec.catList[0]);
 				}
 				catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
 				{
 					TempData["msg"] = "Error saving file. Please check for missing or incorrect form entries.";
-					vmRec = (CatRecVM)TempData["VM"];
-					TempData["VM"] = vmRec;
-					return View(vmRec);
+					Rec = (CatRecVM)TempData["VM"];
+					TempData["VM"] = Rec;
+					return View(Rec);
 				}
 				catch (System.IO.IOException)
 				{
 					TempData["msg"] = "Error saving file. The file save could not be completed.";
-					vmRec = (CatRecVM)TempData["VM"];
-					TempData["VM"] = vmRec;
-					return View(vmRec);
+					Rec = (CatRecVM)TempData["VM"];
+					TempData["VM"] = Rec;
+					return View(Rec);
 				}
 				
 				return RedirectToAction("showAllCats", "Home");
@@ -95,22 +115,22 @@ namespace CatPicker.Controllers
 			}
 			else
 			{
-				vmRec = (CatRecVM)TempData["VM"];
-				TempData["VM"] = vmRec;
-				return View(vmRec);
+				Rec = (CatRecVM)TempData["VM"];
+				TempData["VM"] = Rec;
+				return View(Rec);
 			}
 		}
 
-		public ActionResult saveCat(CatRecVM VMRec)
+		public ActionResult saveCat(Cat Rec)
 		{			
 			if (ModelState.IsValid)
 			{
-				bll.saveCat(VMRec);
+				catBLL.saveCat(Rec);
 				return RedirectToAction("showAllCats", "Home");
 			}
 			else
 			{
-				return View(VMRec);
+				return View(Rec);
 			}
 		}
 
@@ -123,26 +143,26 @@ namespace CatPicker.Controllers
 			//bll.test();
 
 			//Get a new record with list and default items
-			CatRecVM VMRec;
-			VMRec =  bll.getCatById(-1);
-			TempData["VM"] = VMRec;
-			return View(VMRec);
+			CatRecVM rec;
+			rec =  catBLL.getCatById(-1);
+			TempData["VM"] = rec;
+			return View(rec);
 		}
 
 		[ActionName("showNewCat"), HttpPost]
-		public ActionResult showNewCatPost(CatRecVM VMRec)
+		public ActionResult showNewCatPost(CatRecVM Rec)
 		
 		{
 			try
 			{				
-				bll.addCat(VMRec);
+				catBLL.addCat(Rec.catList[0]);
 			}
 			catch (Globals.CustomException ex)
 			{				
 				TempData["msg"] = ex.Message;
-				VMRec = (CatRecVM)TempData["VM"];
-				TempData["VM"] = VMRec;				
-				return View("showNewCat", VMRec);
+				Rec.catList[0] = (Cat)TempData["VM"];
+				TempData["VM"] = Rec.catList[0];				
+				return View("showNewCat", Rec);
 				//return RedirectToAction("showNewCat", "Home");
 			}
 			//New cat record save successful
@@ -156,10 +176,36 @@ namespace CatPicker.Controllers
 
 		public ActionResult deleteCat(int id)
 		{
-			bll.deleteCat(id);
+			catBLL.deleteCat(id);
 			return RedirectToAction("showAllCats", "Home");
 		}
-		
+
+
+		//********Maintenance 
+		[ActionName("editCatDetails"), HttpGet]
+		public ActionResult editCatDetailsGet(int id)
+		{
+			var VMRec = catDetailsBLL.getById(id);
+			TempData["VM"] = VMRec;
+			return View("editCatDetails", VMRec);
+		}
+
+		[ActionName("editCatDetails"), HttpPost]
+		public ActionResult editCatDetailsPost(CatDetailsVM VMRec)
+		{
+			
+			return null;
+		}
+
+
+		//********Dropdowns
+		public ActionResult getCityList (int id)
+		{
+			// Move this code to a generic <T> DAL utility?
+			var cityList = new CityBLL().getCitiesByStateId(id);
+			
+			return Json(cityList, JsonRequestBehavior.AllowGet);
+		}
 
 		//********Utilities
 		public ActionResult About()
@@ -175,5 +221,6 @@ namespace CatPicker.Controllers
 
 			return View();
 		}
+	
 	}
 }

@@ -31,9 +31,9 @@ div.navBarPic {
 a.navBarPic{
   vertical-align:baseline;
 }
+
 img.navBarPic {
   height: 70px;
- 
   display: inline-block;
   vertical-align: middle;
   width:250px;
@@ -46,6 +46,32 @@ div.topNavBarSpacer {
   display: inline-block;
   vertical-align: middle;
   background-color: lightyellow;
+}
+
+
+div.featurePic {
+  border: 7px outset lightblue;
+  background-color: lightgray;
+  height: 250px;
+  width: 250px;
+  text-align: center;
+}
+
+img.featurePic {  
+  object-fit: fill;
+/*  max-width: 90%;
+  max-height: 90%;*/
+}
+
+div.detailDivPic {
+  border: 7px outset lightblue;
+  background-color: lightgray;
+  height: 250px;
+  width: 250px;
+  text-align: center;
+  background-size: contain; /* scales the image */
+  background-position: center; /* centers the image */
+  background-repeat:no-repeat;
 }
 
 body{

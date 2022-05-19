@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Models.Models.Cat>
+﻿@model Models.ViewModels.CatRecVM
 
 @{
     ViewBag.Title = "showAllCats";
@@ -12,36 +12,33 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.DisplayNameFor(model => model.catList[0].name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.age)
+            @Html.DisplayNameFor(model => model.catList[0].age)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pic)
+            @Html.DisplayNameFor(model => model.catList[0].pic)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.gender)
+            @Html.DisplayNameFor(model => model.catList[0].gender)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.mainColor)
+            @Html.DisplayNameFor(model => model.catList[0].mainColor)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.secondColor)
+            @Html.DisplayNameFor(model => model.catList[0].secondColor)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.thirdColor)
+            @Html.DisplayNameFor(model => model.catList[0].thirdColor)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.arrivalDate)
+            @Html.DisplayNameFor(model => model.catList[0].arrivalDate)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.catList) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.name)
@@ -50,8 +47,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.age)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pic)
+        <td>            
           <img src="~/Images/Cats/@item.pic" alt="Cat" style="height:50px;">
         </td>
         <td>
@@ -67,14 +63,12 @@
             @Html.DisplayFor(modelItem => item.thirdColor)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.weight)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.arrivalDate)
         </td>
         <td>
           @Html.ActionLink("Edit", "editCat", new { id = item.Id }) |
-          @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+          @Html.ActionLink("EditCatDetails", "editCatDetails", new { id = item.Id }) |
+          @Html.ActionLink("Details", "showCatDetails", new { id = item.Id }) |
           @Html.ActionLink("Delete", "deleteCat", new { id = item.Id },
                  new { onclick = "return confirm('Are you sure?');" })
           @*@Html.ActionLink("Delete", "deleteCat", new { onclick = "saveCat();" })*@

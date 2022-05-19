@@ -1,60 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Models;
+using System.Data;
+using System.Data.SqlClient;
+
 
 namespace DAL.Repositories
 {
-	class CatBreedRepository<T> : ICatRepository<T> where T : class
+	class CatBreedRepository<T> : ODBCRep<CatBreed> where T : class
 	{
-
-		public Contexts.CatBreedContext _context = null;
-		public DbSet<T> table = null;
 
 		public CatBreedRepository()
 		{
-			_context = new Contexts.CatBreedContext();
-			table = _context.Set<T>();
-			var catBreeds = _context.catBreeds.ToList();
+			base.conStrName = "CatsContext";
+			base.createSQLstrings("dbo.breeds");
 		}
 
-		public CatBreedRepository(Contexts.CatBreedContext _context)
+		//********************************** CRUD Interface methods
+
+		public IEnumerable<CatBreed> GetAll(string sqlStr = null, List<SqlParameter> paramList = null)
 		{
-			this._context = _context;
-			table = _context.Set<T>();
+			return GetRecords(sqlStr, paramList);
 		}
 
-		public void Delete(object id)
+		public CatBreed GetById(int id)
 		{
-			throw new NotImplementedException();
+			// id = -1 means a new record is requested for the editor, otherwise return a record
+			if (id == -1)
+				return new CatBreed();
+			else
+				return GetRecordByID(id);
 		}
 
-		public IEnumerable<T> GetAll()
+		public void Insert(CatBreed obj)
 		{
-			return table.ToList();
-		}
-
-		public T GetById(object id)
-		{
-			return table.Find(id);
-		}
-
-		public void Insert(T obj)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Save(T obj)
-		{
-			using (var context = new DAL.Contexts.CatBreedContext())
+			try
 			{
-				//Attach the new record to the context and mark it dirty (changed)
-				context.Entry(obj).State = EntityState.Modified;
-				//Save the changes
-				context.SaveChanges();
+				InsertRecord(obj);
 			}
+			catch (Exception)
+			{
+				throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
+			}
+		}
+
+		public void Save(CatBreed obj)
+		{
+			try
+			{
+				SaveRecord(obj, obj.Id);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Save failed. Changes are not saved ex:");
+			}
+		}
+
+
+		public void Delete(int id)
+		{
+			DeleteRecord(id);
+		}
+
+		//*************************************** CRUD Helpers
+		//Put datarow data into a record object
+		public override CatBreed PopulateRecord(DataRow dr)
+		{
+			CatBreed Rec = new CatBreed();
+			Rec.Id = Convert.ToInt32(dr["Id"]);
+			Rec.breedName = dr["breedName"].ToString();
+			Rec.breedDescription = dr["breedDescription"].ToString();
+			Rec.breedPic = dr["breedPic"].ToString();
+			return Rec;
+		}
+
+		//Put data object data into a data row
+		public override DataRow PopulateDataRow(CatBreed datarec, DataRow dr)
+		{
+			DataSet ds = new DataSet();
+			dr["Id"] = datarec.Id;
+			dr["breedName"] = datarec.breedName;			
+			dr["breedDescription"] = datarec.breedDescription;
+			dr["breedPic"] = datarec.breedPic;
+			return dr;
+		}
+
+		public int getLastRecordID()
+		{
+			return getLastRecordIDBase();
 		}
 	}
 }

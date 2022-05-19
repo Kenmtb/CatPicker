@@ -24,6 +24,14 @@ namespace DAL.Repositories
 
 		public string conStrName { get; set; }
 		
+		public ODBCRep()
+		{
+			SqlConnection con = new SqlConnection();
+			SqlConnection.ClearAllPools();
+			con.Close();
+		}
+
+
 		//********************************* ADO connection abstract methods
 
 		public void createSQLstrings(string tableName)
@@ -47,7 +55,7 @@ namespace DAL.Repositories
 		public SqlConnection getConnection()
 		{
 			SqlConnection conn = new SqlConnection(getConnectionString());
-			if(conn.State == System.Data.ConnectionState.Closed)
+			if (conn.State == System.Data.ConnectionState.Closed)
 			{
 				conn.Open();
 			}
@@ -109,9 +117,6 @@ namespace DAL.Repositories
 			return returnValue;
 		}
 
-
-	
-
 		//*************************** Crud Helper methods *****************************************************
 
 		public DataTable getDataObject(string sqlStr = null, List<SqlParameter> paramList = null)
@@ -120,11 +125,14 @@ namespace DAL.Repositories
 			SqlCommand cmd;
 			SqlDataReader sdr;
 
-			cmd = getCommand(sqlStr, paramList);
-			sdr = cmd.ExecuteReader();
+			using (cmd = getCommand(sqlStr, paramList))
+			{
+				sdr = cmd.ExecuteReader();
+				dt.Load(sdr);
+				sdr.Close();
+			}
+			//cmd.Dispose();
 
-			dt.Load(sdr);			
-			sdr.Close();		
 			return dt;
 		}
 
@@ -133,6 +141,11 @@ namespace DAL.Repositories
 
 			return null;
 		}
+
+		//protected virtual T populateDropDownRecords(T datarec)
+		//{
+		//	return null;
+		//}
 
 		protected T GetRecordByID(int id)
 		{
@@ -145,8 +158,8 @@ namespace DAL.Repositories
 			var list = new List<T>();
 			DataTable reader = null;
 
-			try
-			{
+			//try
+			//{
 				reader = getDataObject(sqlStr,paramList);
 				try
 				{
@@ -156,23 +169,22 @@ namespace DAL.Repositories
 						{
 
 							list.Add(PopulateRecord(rec));
-						}
+						}					
 					}
-
+				
 				}
 				catch (Exception )
 				{
-					throw new Globals.CustomException("Record fetch failed.");
+					throw new Globals.CustomException("Record fetch failed. (check repository model mapping for missing or misspelled fields or null data)");
 				}
-			}
-			catch (Exception ) 
-			{
-				throw new Globals.CustomException("Failed to build the required data object.");
-			}
+			//}
+			//catch (Exception ) 
+			//{
+			//	throw new Globals.CustomException("Failed to build the required data object.");
+			//}
 			
 			return list;
 		}
-
 
 		public virtual DataRow PopulateDataRow(T datarec, DataRow dr)
 		{
@@ -239,7 +251,7 @@ namespace DAL.Repositories
 			}
 			catch (Exception ex)
 			{
-				//throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
+				throw new Globals.CustomException("Save changes failed, check editor for invalid or missing entries.");
 			}
 		}
 

@@ -4,37 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Models.Models;
+using Models.ViewModels;
 using DAL.Repositories;
 
 namespace BLL
 {
     public class CatDetailsBLL
 	{				
-		DAL.Repositories.CatDetailsRepository<CatDetail> rep;
+		CatDetailRepository<CatDetail> rep;
+		CatDetailVMRepository VMRep;
+		
 		public CatDetailsBLL()
-		{
-			//rep = new DAL.MockRepositories.MockCatRepository<Cat>();
-			rep = new DAL.Repositories.CatDetailsRepository<CatDetail>();
-		}
-
-		public List<CatDetail> getAllCats()
 		{			
-			return rep.GetAll().ToList();			
+			rep = new CatDetailRepository<CatDetail>();
+			VMRep = new CatDetailVMRepository();			
 		}
 
-		public CatDetail getCatById(int id)
-		{
-			return rep.GetById(id);
+		public CatDetailsVM getAll()
+		{			
+			return VMRep.GetAll();			
 		}
 
-		public void saveCat(CatDetail catRec)
+		public CatDetailsVM getById(int id)
 		{
-			rep.Save(catRec);	
+			return VMRep.GetById(id);
 		}
 
-		public void addCat(CatDetail catRec)
+		public void save(CatDetail Rec)
 		{
-			rep.Insert(catRec);
+			rep.Save(Rec);	
+		}
+
+		public void add(CatDetail Rec)
+		{
+			rep.Insert(Rec);
 		}
 	}
 }

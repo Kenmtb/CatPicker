@@ -10,11 +10,11 @@ namespace BLL
 {
     public class CatPersonalityBLL
 	{				
-		DAL.Repositories.CatDetailsRepository<CatDetail> rep;
+		DAL.Repositories.CatDetailRepository<CatDetail> rep;
 		public CatPersonalityBLL()
 		{
 			//rep = new DAL.MockRepositories.MockCatRepository<Cat>();
-			rep = new DAL.Repositories.CatDetailsRepository<CatDetail>();
+			rep = new DAL.Repositories.CatDetailRepository<CatDetail>();
 		}
 
 		public List<CatDetail> getAllCats()

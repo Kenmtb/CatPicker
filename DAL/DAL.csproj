@@ -63,7 +63,10 @@
     <Compile Include="MockRepositories\MockCatRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CatBreedRepository.cs" />
-    <Compile Include="Repositories\CatDetailsRepository.cs" />
+    <Compile Include="Repositories\CatDetailPicVMRepository.cs" />
+    <Compile Include="Repositories\CatDetailPicsRepository.cs" />
+    <Compile Include="Repositories\CatDetailRepository.cs" />
+    <Compile Include="Repositories\CatDetailVMRepository.cs" />
     <Compile Include="Repositories\EFRep\CatDetailsRepository.cs" />
     <Compile Include="Repositories\CatPersonalityRepository.cs" />
     <Compile Include="Repositories\CatRecVMRepository.cs" />

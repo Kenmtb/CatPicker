@@ -12,7 +12,7 @@ namespace CatPicker
 			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "Home", action = "showNewCat", id = UrlParameter.Optional }
+				defaults: new { controller = "Home", action = "showAllCats", id = UrlParameter.Optional }
 			);
 		}
 	}

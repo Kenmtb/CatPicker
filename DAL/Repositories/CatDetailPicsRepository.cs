@@ -5,36 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Models;
 using System.Data;
+using System.Data.SqlClient;
 
 
 namespace DAL.Repositories
 {
-	public class CatDetailsRepository<T> : ODBCRep<CatDetail> where T : class
+	public class CatDetailPicsRepository<T> : ODBCRep<CatDetailPic> where T : class
 	{
-
-		public CatDetailsRepository()
+		public CatDetailPicsRepository()
 		{
-			base.conStrName = "CatDetailContext";
-			base.createSQLstrings("dbo.catDetails");
+			base.conStrName = "CatsContext";
+			base.createSQLstrings("dbo.catDetailPics");
 		}
 
 		//********************************** CRUD Interface methods
 
-		public IEnumerable<CatDetail> GetAll()
+		public IEnumerable<CatDetailPic> GetAll(string sqlStr = null, List<SqlParameter> paramList = null)
 		{
-			return GetRecords();
+			return GetRecords(sqlStr, paramList);
 		}
 
-		public CatDetail GetById(int id)
+		public CatDetailPic GetById(int id)
 		{
 			// id = -1 means a new record is requested for the editor, otherwise return a record
 			if (id == -1)
-				return new CatDetail();
+				return new CatDetailPic();
 			else
 				return GetRecordByID(id);
 		}
 
-		public void Insert(CatDetail obj)
+		public void Insert(CatDetailPic obj)
 		{
 			try
 			{
@@ -46,7 +46,7 @@ namespace DAL.Repositories
 			}
 		}
 
-		public void Save(CatDetail obj)
+		public void Save(CatDetailPic obj)
 		{
 			try
 			{
@@ -66,24 +66,24 @@ namespace DAL.Repositories
 
 		//*************************************** CRUD Helpers
 		//Put datarow data into a record object
-		public override CatDetail PopulateRecord(DataRow dr)
+		public override CatDetailPic PopulateRecord(DataRow dr)
 		{
-			CatDetail Rec = new CatDetail();
-
+			CatDetailPic Rec = new CatDetailPic();
 			Rec.Id = Convert.ToInt32(dr["Id"]);
-			Rec.description = dr["description"].ToString();
-			Rec.catId = (int)dr["catId"];
-			
+			if (dr["catId"] != null) Rec.catId = Convert.ToInt32(dr["catId"]);
+			if (dr["catPicDescription"] != null) Rec.catPicDescription = dr["catPicDescription"].ToString();
+			if (dr["catPicUrl"] != null) Rec.catPicUrl = dr["catPicUrl"].ToString();
 			return Rec;
 		}
 
 		//Put data object data into a data row
-		public override DataRow PopulateDataRow(CatDetail datarec, DataRow dr)
+		public override DataRow PopulateDataRow(CatDetailPic datarec, DataRow dr)
 		{
 			DataSet ds = new DataSet();
-
-			dr["description"] = datarec.description;
+			dr["Id"] = datarec.Id;			
 			dr["catId"] = datarec.catId;
+			dr["catPicDescription"] = datarec.catPicDescription;
+			dr["catPicUrl"] = datarec.catPicUrl;			
 			return dr;
 		}
 

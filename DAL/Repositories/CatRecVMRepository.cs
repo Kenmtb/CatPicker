@@ -13,135 +13,54 @@ namespace DAL.Repositories
 
 	public class CatRecVMRepository 
 	{
-		//private Contexts.CatsContext catContext = null;
-		//private Contexts.CatPersonalityContext catPersonalityContext = null;
-
-		private CatRecVM cvm;
-
-		
-
+		private CatRecVM cvm; //The cat view model which serves the view(s)		
 		private CatRepository<Cat> catRep;
-		private CatDetailsRepository<CatDetail> detailsRep;
-		private CatPersonalityRepository<CatPersonality> personalityRep;
-		private CatBreedRepository<CatBreed> breedRep;
-		
+		private CatDetailRepository<CatDetail> detailsRep;
+
 		public CatRecVMRepository()
-		{
-
+		{			
 			//Instantiate repositories
-
-			
-
 			catRep = new CatRepository<Cat>();
-			detailsRep = new CatDetailsRepository<CatDetail>();
-			personalityRep = new CatPersonalityRepository<CatPersonality>();
-			breedRep = new CatBreedRepository<CatBreed>();
-
+			detailsRep = new CatDetailRepository<CatDetail>();
+	
 			//Instantiate models
 			cvm = new CatRecVM();
-			
-			cvm.personalityRec = new CatPersonality();
-			cvm.breedRec = new CatBreed();
-			cvm.detailRec = new CatDetail();
-			cvm.locationRec = new CatLocation();
+			cvm.catBreedList = new CatBreedRepository<CatBreed>().GetAll().ToList();
 		}
-
-		//void Delete(object id)
-		//{
-		//	throw new NotImplementedException();
-		//}
-
-		public List<Cat> GetAll()
+		
+		public CatRecVM GetAll()
 		{
-			Test();
-			return catRep.GetAll().ToList();
-			
-			//throw new NotImplementedException();
+			cvm.catList = catRep.GetAll().ToList();//get main list			
+			return cvm;			
+			//throw new NotImplementedEDetailon();
 		}
 
 		public CatRecVM GetById(int id)
-		{
-			//Get a new cat record object (id=-1) or and existing cat record object
-			cvm.catRec = catRep.GetById(id);			
-
-			//Get drop list data
-			cvm.catPersonalityList = personalityRep.GetAll().ToList();
-			cvm.catBreedList = breedRep.GetAll().ToList();
-			cvm.catDetailList = detailsRep.GetAll().ToList();
-			
-			if ((int)id != -1)
-			{
-				//Fill the data object for drop lists and defaults - Tables that are forigen keys of main table (catRec)
-				if (cvm.catRec.catPersonalityId != null) cvm.personalityRec.personalityType = personalityRep.GetById(cvm.catRec.catPersonalityId).personalityType.ToString();				
-				
-				if (cvm.catRec.breedId != null) cvm.breedRec.breedName = breedRep.GetById(cvm.catRec.breedId).breedName.ToString();
-
-				//Fill the data object for drop lists and defaults - Tables where the main table (catRec) is a foriegn key			
-				cvm.detailRec = cvm.catDetailList.FirstOrDefault(x => x.catId == cvm.catRec.Id);
-			}
-			else
-			{
-				//Set new obj defaults
-				cvm.catRec = new Cat();
-				cvm.catRec.pic = "default.jpg";
-				cvm.catRec.mainColor = "N/A";
-				cvm.catRec.secondColor = "N/A";
-				cvm.catRec.thirdColor = "N/A";
-				cvm.catRec.arrivalDate = DateTime.Now;
-			}
+		{			
+			cvm.catList = new List<Cat>();
+			cvm.catList.Add(catRep.GetById(id));			
 			return cvm;
 		}
 
-		//New record
-		public void Insert(CatRecVM obj)
-		{
-			//Prepare a new cat record for editing - Get the drop list and default items.
-			//obj =  GetById(-1);
-
-			//Insert cat record
-			catRep.Insert(obj.catRec);
-			
-			//**Handle foriegn key tables
-			//Also insert the foriegn table details. This is because details data is in a separate table.
-			obj.detailRec.catId = catRep.getLastRecordID();
-			
-			//Update the foriegn key table (Master insert triggered creating foriegn key table entry for master ID but we need to store the master's data via update			
-			detailsRep.Insert(obj.detailRec);
-			
-			
-		}
-
-		//Update record
-		public void Save(CatRecVM obj)
-		{
-			//Preserve the foriegn keys that are not part of the UI
-			//obj.catRec.catDetailsId = obj.detailRec.Id;
-			
-			catRep.Save(obj.catRec);
-			detailsRep.Save(obj.detailRec);
-			
-		}
-
-		public void Delete(int id)
-		{
-			catRep.Delete(id);
-			//Find the cat record's detail record ID
-			//int detID = 
-			//detailsRep.Delete(id);
-		}
-
-
+	
 		public void Test()
 		{
 			//This shows how to perform a sql join of 2 tables from different repositories
-			List < Cat > cl = new List<Cat>();
-			cl = catRep.GetAll().ToList();
 
-			List<CatDetail> dl = new List<CatDetail>();
-			dl = detailsRep.GetAll().ToList();
+			//string str = "Select description from dbo.catDetails where catId = " + 35;
+			//var dt = detailsRep.getDataObject(str);
+			//string brd;
+			//if (dt.Rows.Count>0)
+			//	brd = dt.Rows[0].ItemArray[0].ToString();
 
-			int? did = dl.First(x => x.Id == 6).catId;
-			string catname = cl.First(x => x.Id == did).name;
+			//	List< Cat > cl = new List<Cat>();
+			//cl = catRep.GetAll().ToList();
+
+			//List<CatDetail> dl = new List<CatDetail>();
+			//dl = detailsRep.GetAll().ToList();
+
+			//int? did = dl.First(x => x.Id == 6).catId;
+			//string catname = cl.First(x => x.Id == did).name;
 		}
 	}
 

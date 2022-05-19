@@ -27,6 +27,11 @@ namespace CatPicker.Controllers
             return View();
         }
 
+        public void test()
+		{
+            var ans = cityBLL.test("4");
+		}
+
         public ActionResult showStates()
 		{            
             return View(stateBll.getAllStates());

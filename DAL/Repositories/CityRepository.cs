@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Models;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace DAL.Repositories
 {
@@ -18,9 +19,9 @@ namespace DAL.Repositories
 
 		//********************************** CRUD Interface methods
 
-		public IEnumerable<City> GetAll()
+		public IEnumerable<City> GetAll(string sqlStr = null, List<SqlParameter> paramList = null)
 		{
-			return GetRecords();
+			return GetRecords(sqlStr,paramList);
 		}
 
 		public City GetById(int id)

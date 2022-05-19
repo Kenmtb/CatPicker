@@ -156,6 +156,7 @@
     <Content Include="Images\Cats\Bill.jpg" />
     <Content Include="Images\Cats\default.jpg" />
     <Content Include="Images\Cats\Goober.jpg" />
+    <Content Include="Images\Cats\Meatball.jpg" />
     <Content Include="Images\Cats\Mugzy.jpg" />
     <Content Include="Images\General\breedHeader.jpg" />
     <Content Include="Images\General\catGroup1.png" />
@@ -189,15 +190,16 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Doit.cshtml" />
     <Content Include="Views\Home\saveCatConfirmationMDL.cshtml" />
-    <Content Include="Views\Home\DELcreateCat.cshtml" />
     <Content Include="Views\Home\showAllCats.cshtml" />
     <Content Include="Views\Home\editCat.cshtml" />
-    <Content Include="Views\Home\editCat - Copy.cshtml" />
     <Content Include="Views\Home\showNewCat.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Admin\showStates.cshtml" />
     <Content Include="Views\Admin\showCities.cshtml" />
     <Content Include="Views\Admin\showLocations.cshtml" />
+    <Content Include="Views\Home\showCatDetails.cshtml" />
+    <Content Include="Views\Home\showCatDetailPics.cshtml" />
+    <Content Include="Views\Home\editCatDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,6 +15,6 @@ namespace DAL.Contexts
 			Database.SetInitializer<CatPersonalityContext>(null);
 		}
 
-		public DbSet<CatDetail> catDetails { get; set; }
+		public DbSet<CatDetail> CatDetails { get; set; }
 	}
 }

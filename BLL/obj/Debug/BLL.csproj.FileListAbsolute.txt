@@ -5,13 +5,13 @@ C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\Models.dll
 C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\EntityFramework.dll
 C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\Globals.dll
 C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\DAL.pdb
+C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\DAL.dll.config
 C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\Models.pdb
+C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\Models.dll.config
 C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\EntityFramework.xml
 C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\Globals.pdb
-C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.dll
-C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.pdb
-C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\DAL.dll.config
-C:\Users\Ken\source\repos\CatPicker\BLL\bin\Debug\Models.dll.config
 C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.csproj.AssemblyReference.cache
 C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
 C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.csproj.CopyComplete
+C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.dll
+C:\Users\Ken\source\repos\CatPicker\BLL\obj\Debug\BLL.pdb

@@ -1,0 +1,28 @@
+﻿@model Models.ViewModels.CatDetailPicVM
+
+@{
+  ViewBag.Title = "showCatDetailPics";
+}
+
+<h2>showCatDetailPics</h2>
+  
+<div style=" ">
+
+  @foreach (Models.Models.CatDetailPic catPic in Model.catDetailPicList)
+  {
+
+  <div class="detailDivPic" style="background-image: url('../../Images/Cats/@(catPic.catPicUrl)'); display: inline-block; ">
+  </div>
+
+    }
+
+
+  </div>
+
+<div style="display:block">
+  <br /><br />
+  <p>
+    @Html.ActionLink("Back to Details", "showCatDetails", new { id = Model.catDetailPicList[0].catId }) |
+    @Html.ActionLink("Back to List", "showAllCats")
+  </p>
+</div>

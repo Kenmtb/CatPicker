@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CatDetailPicBLL.cs" />
     <Compile Include="CatPersonalityBLL.cs" />
     <Compile Include="CatDetailsBLL.cs" />
     <Compile Include="CatBLL.cs" />

@@ -18,7 +18,7 @@ namespace DAL.Repositories.EFRep
 		{
 			_context = new Contexts.CatDetailContext();
 			table = _context.Set<T>();
-			var catDetails = _context.catDetails.ToList();
+			var catDetails = _context.CatDetails.ToList();
 		}
 
 		public CatDetailsRepository( Contexts.CatDetailContext _context)

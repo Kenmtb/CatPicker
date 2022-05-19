@@ -1,0 +1,71 @@
+﻿@model Models.ViewModels.CatDetailsVM
+
+@{
+  ViewBag.Title = "showCatDetails";
+}
+
+<h2>@Html.DisplayFor(model => model.catName)</h2>
+
+@*<a href="~/Home/showCatDetailPics/@Model.catId">
+  <div class="featurePic"> <img class="featurePic" src="~/Images/Cats/@(Model.catDetailPicList[0].catPicUrl)" alt="Cat"> </div>
+</a>*@
+
+<a href="~/Home/showCatDetailPics/@Model.catId">
+  <div class="detailDivPic" style="background-image: url('../../Images/Cats/@(Model.catDetailPicList[0].catPicUrl)') ">  </div>
+</a>
+
+  @*@foreach (Models.Models.CatDetailPic catPic in Model.catDetailPicList)
+    {
+      <img src="~/Images/Cats/@(catPic.catPicUrl)" alt="Cat" style="height:50px;">
+    }*@
+
+  <div>
+    <h4>CatDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+      <dt>
+        @Html.DisplayNameFor(model => model.catId)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.catId)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.catDetail.description)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.catDetail.description)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.catLocation)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.catLocation)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.catPersonality)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.catPersonality)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.catDetail.weight)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.catDetail.weight)
+      </dd>
+
+    </dl>
+  </div>
+  <p>
+
+    @Html.ActionLink("Back to List", "showAllCats")
+  </p>

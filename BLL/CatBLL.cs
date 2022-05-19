@@ -12,20 +12,20 @@ namespace BLL
     public class CatBLL
 	{
 		//DAL.MockRepositories.MockCatRepository<Cat> rep;
-		//CatRepository<Cat> rep;
-		CatRecVMRepository VMrep;
+		CatRepository<Cat> rep;//used for updating
+		CatRecVMRepository VMrep; //used for displaying 
 
 		public CatBLL()
 		{
 			
 			//rep = new DAL.MockRepositories.MockCatRepository<Cat>();
-			//rep = new CatRepository<Cat>();
-			VMrep = new CatRecVMRepository();
+			rep = new CatRepository<Cat>(); //Repository used for creating, editing, saving
+			VMrep = new CatRecVMRepository(); //VM Repository used for display
 		}
 
-		public List<Cat> getAllCats()
+		public CatRecVM getAllCats()
 		{
-			return VMrep.GetAll().ToList();
+			return VMrep.GetAll();
 		}
 
 		public CatRecVM getCatById(int id)
@@ -33,19 +33,19 @@ namespace BLL
 			return VMrep.GetById(id);
 		}
 
-		public void saveCat(CatRecVM catRec)
+		public void saveCat(Cat Rec)
 		{			
-			VMrep.Save(catRec);	
+			rep.Save(Rec);	
 		}
 
-		public void addCat(CatRecVM catVMRec)
+		public void addCat(Cat Rec)
 		{
-			VMrep.Insert(catVMRec);
+			rep.Insert(Rec);
 		}
 
 		public void deleteCat(int id)
 		{
-			VMrep.Delete(id);
+			rep.Delete(id);
 		}
 
 		public void test()

@@ -29,7 +29,7 @@ namespace DAL.MockRepositories
 			Cat rec1 = new Cat();
 			rec1.age = 5;
 			rec1.arrivalDate = new DateTime(2021, 10, 10);
-			rec1.breedId = 2;
+			//rec1.breedId = 2;
 			//rec1.catDetailsId = null;
 			rec1.gender = "Female";
 			rec1.name = "Cleo";
@@ -40,7 +40,7 @@ namespace DAL.MockRepositories
 			Cat rec2 = new Cat();
 			rec2.age = 3;
 			rec2.arrivalDate = new DateTime(2021, 5, 20);
-			rec2.breedId = 3;
+			//rec2.breedId = 3;
 			//rec2.catDetailsId = null;
 			rec2.gender = "Male";
 			rec2.name = "Butch";
