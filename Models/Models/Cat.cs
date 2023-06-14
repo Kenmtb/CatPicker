@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
@@ -24,7 +25,9 @@ namespace Models.Models
 		public string mainColor { get; set; }
 		public string secondColor { get; set; }
 		public string thirdColor { get; set; }
-		public Nullable<DateTime> arrivalDate { get; set; }
+
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+		public Nullable<DateTime> arrivalDate { get; set; }		
 
 		//[NotMapped]
 		////drop down

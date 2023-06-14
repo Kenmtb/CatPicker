@@ -76,7 +76,7 @@ namespace DAL.Repositories
 			Rec.locationId = (object)dr["locationId"] == DBNull.Value ? 0 : Convert.ToInt32(dr["locationId"]);
 			Rec.stateId = (object)dr["stateId"] == DBNull.Value ? 0 : Convert.ToInt32(dr["stateId"]);
 			Rec.cityId = (object)dr["cityId"] == DBNull.Value ? 0 : Convert.ToInt32(dr["cityId"]);
-			Rec.detailPicsId = (object)dr["detailPicsId"] == DBNull.Value ? 0 : Convert.ToInt32(dr["detailPicsId"]);
+			Rec.detailPicsId = (object)dr["detailPicId"] == DBNull.Value ? 0 : Convert.ToInt32(dr["detailPicId"]);
 
 			Rec.weight = (object)dr["weight"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["weight"]);
 			Rec.description = (object)dr["description"] == DBNull.Value ? null : dr["description"].ToString();

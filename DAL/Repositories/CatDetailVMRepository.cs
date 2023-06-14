@@ -41,12 +41,14 @@ namespace DAL.Repositories
 			cdvm.catName = new CatRepository<Cat>().GetById(id).name.ToString();
 			cdvm.catId = id;
 
-			cdvm.catDetailPicList.Select(x => x.catId == id).ToList();
+			cdvm.catDetailPicList = cdvm.catDetailPicList.FindAll(x => x.catId == id);
 
 			int did = Convert.ToInt32(new CatRecVMRepository().GetById(id).catList[0].detailsId); //get the cat detail id						
 			cdvm.catDetail = detailsRep.GetById(did);
-			cdvm.catLocation = new LocationRepository<CatLocation>().GetById(did).locationName.ToString();
-			cdvm.catPersonality = new CatPersonalityRepository<CatPersonality>().GetById(did).personalityType.ToString();
+
+
+			cdvm.catLocation = new LocationRepository<CatLocation>().GetById((int) cdvm.catDetail.locationId).locationName.ToString();
+			cdvm.catPersonality = new CatPersonalityRepository<CatPersonality>().GetById(cdvm.catDetail.personalityId).personalityType.ToString();
 
 			cdvm.stateId = cdvm.catDetail.stateId;
 			cdvm.cityId = cdvm.catDetail.cityId;

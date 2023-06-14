@@ -22,5 +22,10 @@ namespace BLL
 		{
 			return rep.GetAll().ToList();
 		}
+
+		public List<Location> getLoctionById(int id)
+		{
+			return rep.GetAll().Where(x => x.Id == id).OrderBy(x => x.locationName).ToList();
+		}
 	}
 }

@@ -84,6 +84,18 @@
   })
 
 
+  $(document).ready(function () {
+    $("#cityId").change(function () {
+      $.get("/CatPicker/Home/getLocationList", { id: $("#cityId").val() }, function (data) {
+        $("#locationId").empty();
+        $.each(data, function (index, row) {
+          $("#locationId").append("<option value='" + row.cityId + "'>" + row.cityName + "</option>")
+        })
+      })
+    })
+  })
+
+
   /*NOTE! the ID tag in the .change statement below needs to be a simple property of the model, otherwise the framework will create a mangled version EX using stateList[0].Id creates an id tag=stateList_0__Id */
   /*This was solved by using model.stateID in the dropdownfor making the id tag = stateId */
   //$(document).ready(function () {
@@ -110,7 +122,7 @@
 </script>
 
 <div>
-  @Html.ActionLink("Back to List", "Index")
+  @Html.ActionLink("Back to List", "showAllCats")
 </div>
 
 

@@ -53,11 +53,13 @@
   <ItemGroup>
     <Compile Include="Models\Cat.cs" />
     <Compile Include="Models\CatBreed.cs" />
+    <Compile Include="Models\CatColor.cs" />
     <Compile Include="Models\CatDetail.cs" />
     <Compile Include="Models\CatDetailPic.cs" />
     <Compile Include="Models\CatLocation.cs" />
     <Compile Include="Models\CatPersonality.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Junk.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\State.cs" />

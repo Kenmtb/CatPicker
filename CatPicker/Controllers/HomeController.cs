@@ -22,6 +22,8 @@ namespace CatPicker.Controllers
 
 			// the terrible hack
 			var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
+
 			catBLL = new CatBLL();
 			catDetailsBLL = new CatDetailsBLL();
 			CatDetailPicBLL = new CatDetailPicBLL();
@@ -180,7 +182,6 @@ namespace CatPicker.Controllers
 			return RedirectToAction("showAllCats", "Home");
 		}
 
-
 		//********Maintenance 
 		[ActionName("editCatDetails"), HttpGet]
 		public ActionResult editCatDetailsGet(int id)
@@ -202,9 +203,14 @@ namespace CatPicker.Controllers
 		public ActionResult getCityList (int id)
 		{
 			// Move this code to a generic <T> DAL utility?
-			var cityList = new CityBLL().getCitiesByStateId(id);
-			
+			var cityList = new CityBLL().getCitiesByStateId(id);			
 			return Json(cityList, JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult getLocationLIst (int id)
+		{
+			//var locationList = new LocationBLL().
+			return null;
 		}
 
 		//********Utilities

@@ -21,6 +21,7 @@ namespace Models.ViewModels
 
 		//Drop downs and foriegn key lookup lists
 		public List<CatBreed> catBreedList { get; set; }
-	
+		public List<Gender> genderList { get; set; }
+		public List<CatColor> catColorList { get; set; }		
 	}
 }

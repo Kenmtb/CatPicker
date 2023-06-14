@@ -26,6 +26,8 @@ namespace DAL.Repositories
 			//Instantiate models
 			cvm = new CatRecVM();
 			cvm.catBreedList = new CatBreedRepository<CatBreed>().GetAll().ToList();
+			cvm.genderList = new GenderRepository().GetAll().ToList();
+			cvm.catColorList = new CatColorRepository<CatColor>().GetAll().ToList();			
 		}
 		
 		public CatRecVM GetAll()

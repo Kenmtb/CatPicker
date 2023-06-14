@@ -46,6 +46,7 @@
     <Compile Include="CatDetailsBLL.cs" />
     <Compile Include="CatBLL.cs" />
     <Compile Include="CityBLL.cs" />
+    <Compile Include="GenderBLL.cs" />
     <Compile Include="LocationBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateBLL.cs" />

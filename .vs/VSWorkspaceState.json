@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\CatPicker",
+    "\\CatPicker\\Controllers",
+    "\\DAL",
+    "\\DAL\\Properties",
+    "\\Models"
   ],
   "SelectedNode": "\\CatPicker.sln",
   "PreviewInSolutionExplorer": false

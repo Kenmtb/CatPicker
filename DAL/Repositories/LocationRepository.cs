@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Models;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace DAL.Repositories
 {
@@ -30,6 +31,11 @@ namespace DAL.Repositories
 				return new Location();
 			else
 				return GetRecordByID(id);
+		}
+
+		public IEnumerable<Location> GetAll(string sqlStr = null, List<SqlParameter> paramList = null)
+		{
+			return GetRecords(sqlStr, paramList);
 		}
 
 		public void Insert(Location obj)
